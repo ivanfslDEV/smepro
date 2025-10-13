@@ -12,15 +12,20 @@ import {
 } from "@/components/ui/sheet"
 import { LogIn, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useSession } from "next-auth/react";
+import { handleRegister } from "../_actions/login";
 
 export function Header() {
+    const { data: session, status } = useSession();
     const [isOpen, setIsOpen] = useState(false);
-
-    const session = null;
 
     const navItems = [
         { href: "#professionals", label: "Professionals" }
     ]
+
+    async function handleLogin() {
+        await handleRegister("github")
+    }
 
     const NavLinks = () => (
         <>
@@ -38,13 +43,14 @@ export function Header() {
                     </Button>
                 ))
             }
-            {
-                session ? (
-                    <Link href="/dashboard" className="flex items-center justify-center gap-2">
+            {status === 'loading' ? (
+                <></>
+            ) : session ? (
+                    <Link href="/dashboard" className="flex items-center justify-center gap-2 bg-zinc-900 text-white py-1 px-4 rounded">
                         Access Store
                     </Link>
                 ) : (
-                    <Button>
+                    <Button onClick={handleLogin}>
                         <LogIn/>
                         Log In
                     </Button>
@@ -87,10 +93,7 @@ export function Header() {
                                 <NavLinks/>
                             </nav>
                         </div>
-                        
-                        
                     </SheetContent>
-
                 </Sheet>
             </div>
         </header>
