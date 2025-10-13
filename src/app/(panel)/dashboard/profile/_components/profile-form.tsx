@@ -4,8 +4,8 @@ import { z }    from "zod";
 
 const profileSchema = z.object({
     name: z.string().min(1, {message: "Name is Mandatory"}),
-    address: z.string().optional,
-    phone: z.string().optional,
+    address: z.string().optional(),
+    phone: z.string().optional(),
     status: z.string(),
     timeZone: z.string().min(1, {message: "Time Zone is Mandatory"}),
 })
