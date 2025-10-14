@@ -21,7 +21,7 @@ export async function getUserData({ userId }: GetUserDataProps){
             return null;
         }
 
-        return userId;
+        return user;
     } catch (err){
         return null;
     }
