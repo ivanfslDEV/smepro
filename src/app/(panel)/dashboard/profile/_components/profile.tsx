@@ -20,8 +20,18 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import Image from "next/image";
 import imgTest from "../../../../../../public/foto1.png"
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 
 export function ProfileContent() {
 
@@ -125,6 +135,40 @@ export function ProfileContent() {
                                     </FormItem>
                                 )}
                             />
+
+                            <div className="space-y-2">
+                                <Label className="font-semibold">
+                                    Set Times
+                                </Label>
+                                <Dialog>
+                                    <DialogTrigger asChild>
+                                        <Button variant="outline" className="w-full justify-between">
+                                            Click here to set the times
+                                            <ArrowRight className="w-5 h-5"/>
+                                        </Button>
+                                    </DialogTrigger>
+                                    <DialogContent>
+                                        <DialogHeader>
+                                            <DialogTitle>
+                                                Company's Open Times
+                                            </DialogTitle>
+                                            <DialogDescription>
+                                                Select the times below
+                                            </DialogDescription>
+                                        </DialogHeader>
+                                        <section className="py-4">
+                                            <p className="text-sm text-muted-foreground">
+                                                Click on the times to select or unselect:
+                                            </p>
+                                            <div>
+
+                                            </div>
+                                        </section>
+                                    </DialogContent>
+
+                                </Dialog>
+                            </div>
+
                         </div>
 
                     </CardContent>
