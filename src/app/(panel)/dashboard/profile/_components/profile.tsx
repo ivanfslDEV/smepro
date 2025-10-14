@@ -32,10 +32,34 @@ import Image from "next/image";
 import imgTest from "../../../../../../public/foto1.png"
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 export function ProfileContent() {
 
+    const [selectedHours, setSelectedHours] = useState<string[]>([]);
+
     const form = useProfileForm();
+
+    function generateTimeSlots(): string[]{
+        const hours: string[] = [];
+
+        for(let i =8; i <= 24; i++) {
+            for(let j = 0; j < 2; j++){
+                const hour = i.toString().padStart(2, "0");
+                const minute = (j * 30).toString().padStart(2, "0");
+                hours.push(`${hour}:${minute}`);
+            }
+        }
+
+        return hours;
+    }
+
+    const hours = generateTimeSlots();
+
+    function toggleHour(hour: string){
+        setSelectedHours((prev) => prev.includes(hour) ? prev.filter(h => h !== hour) : [...prev, hour].sort());
+    }
 
     return (
        <div>
@@ -157,20 +181,26 @@ export function ProfileContent() {
                                             </DialogDescription>
                                         </DialogHeader>
                                         <section className="py-4">
-                                            <p className="text-sm text-muted-foreground">
+                                            <p className="text-sm text-muted-foreground mb-2">
                                                 Click on the times to select or unselect:
                                             </p>
-                                            <div>
-
+                                            <div className="grid grid-cols-5 gap-2">
+                                                {hours.map((hour) => (
+                                                    <Button
+                                                        key={hour}
+                                                        variant="outline"
+                                                        className={cn("h-10", selectedHours.includes(hour) && "border-2 border-emerald-500 text-primary")}
+                                                        onClick={ () => toggleHour(hour)}
+                                                    >
+                                                        {hour}
+                                                    </Button>
+                                                ))}
                                             </div>
                                         </section>
                                     </DialogContent>
-
                                 </Dialog>
                             </div>
-
                         </div>
-
                     </CardContent>
                 </Card>
             </form>
