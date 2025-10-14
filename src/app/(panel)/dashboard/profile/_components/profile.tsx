@@ -27,20 +27,37 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import Image from "next/image";
 import imgTest from "../../../../../../public/foto1.png"
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { Prisma } from "@/generated/prisma"
 
-export function ProfileContent() {
+type UserWithSubscription = Prisma.UserGetPayload<{
+    include: {
+        subscription: true
+    }
+}>
 
+
+interface ProfileContentProps {
+    user: UserWithSubscription;
+}
+
+export function ProfileContent({ user }: ProfileContentProps) {
     const [selectedHours, setSelectedHours] = useState<string[]>([]);
     const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
-    const form = useProfileForm();
+    const form = useProfileForm({
+        name: user.name,
+        address: user.address,
+        phone: user.phone,
+        status: user.status,
+        timeZone: user.timeZone
+    });
 
     function generateTimeSlots(): string[]{
         const hours: string[] = [];
