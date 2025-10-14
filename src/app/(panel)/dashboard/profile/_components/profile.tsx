@@ -1,6 +1,6 @@
 "use client"
 
-import { useProfileForm  } from "./profile-form";
+import { ProfileFormData, useProfileForm  } from "./profile-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Form,
@@ -66,10 +66,17 @@ export function ProfileContent() {
         zone => zone.startsWith("Europe/")
     );
 
+    async function onSubmit(values: ProfileFormData){
+        const profileData = {
+            ...values,
+            times: selectedHours
+        }
+    }
+
     return (
        <div>
         <Form {...form}>
-            <form>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
                 <Card>
                     <CardHeader>
                         <CardTitle>My Profile</CardTitle>
@@ -101,6 +108,7 @@ export function ProfileContent() {
                                                 placeholder="Enter company name..."
                                             />
                                         </FormControl>
+                                        <FormMessage/>
                                     </FormItem>
                                 )}
                             />
