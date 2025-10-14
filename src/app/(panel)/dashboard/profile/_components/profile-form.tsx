@@ -19,7 +19,7 @@ export function useProfileForm() {
             name: "",
             address: "",
             phone: "",
-            status: "",
+            status: "activo",
             timeZone: ""
         }
     })

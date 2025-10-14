@@ -62,6 +62,10 @@ export function ProfileContent() {
         setSelectedHours((prev) => prev.includes(hour) ? prev.filter(h => h !== hour) : [...prev, hour].sort());
     }
 
+    const timeZones = Intl.supportedValuesOf("timeZone").filter(
+        zone => zone.startsWith("Europe/")
+    );
+
     return (
        <div>
         <Form {...form}>
@@ -207,6 +211,42 @@ export function ProfileContent() {
                                     </DialogContent>
                                 </Dialog>
                             </div>
+                            
+                            <FormField 
+                                control={form.control}
+                                name="timeZone"
+                                render={({field}) => (
+                                    <FormItem>
+                                        <FormLabel className="font-semibold">
+                                            Select a timezone
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Select
+                                                onValueChange={field.onChange}
+                                                defaultValue={field.value}
+                                            >
+                                                <SelectTrigger className="w-full">
+                                                    <SelectValue placeholder="Select a timezone"></SelectValue>
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    {timeZones.map((zone) => (
+                                                        <SelectItem key={zone} value={zone}>
+                                                            {zone}
+                                                        </SelectItem>
+                                                    ))}
+                                                </SelectContent>
+                                            </Select>
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+
+                            <Button
+                                type="submit"
+                                className="w-full bg-emerald-500 hover:bg-emerald-400"
+                            >
+                                Save
+                            </Button>
                         </div>
                     </CardContent>
                 </Card>
