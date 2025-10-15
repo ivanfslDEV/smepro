@@ -32,7 +32,7 @@ import Image from "next/image";
 import imgTest from "../../../../../../public/foto1.png"
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Prisma } from "@/generated/prisma"
 import { updateProfile } from "../_actions/update-profile";
@@ -103,7 +103,11 @@ export function ProfileContent({ user }: ProfileContentProps) {
 
         toast.success(response.data);
     }
-
+    useEffect(() => {
+        if (user?.times) {
+            setSelectedHours(user.times);
+        }
+    }, [user]);
     return (
        <div>
         <Form {...form}>
