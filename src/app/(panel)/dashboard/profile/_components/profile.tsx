@@ -36,6 +36,8 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Prisma } from "@/generated/prisma"
 import { updateProfile } from "../_actions/update-profile";
+import { toast } from 'sonner';
+import { formatPhone } from "@/utils/formatPhone";
 
 type UserWithSubscription = Prisma.UserGetPayload<{
     include: {
@@ -93,8 +95,13 @@ export function ProfileContent({ user }: ProfileContentProps) {
             timeZone: values.timeZone,
             times: selectedHours || []
         });
+        
+        if(response.error){
+            toast.error(response.error);
+            return;
+        }
 
-        console.log("123", response);
+        toast.success(response.data);
     }
 
     return (
@@ -165,6 +172,10 @@ export function ProfileContent({ user }: ProfileContentProps) {
                                             <Input 
                                                 {...field}
                                                 placeholder="Enter company phone..."
+                                                onChange={ (e) => {
+                                                    const formattedValue = formatPhone(e.target.value)
+                                                    field.onChange(formattedValue)
+                                                }}
                                             />
                                         </FormControl>
                                     </FormItem>

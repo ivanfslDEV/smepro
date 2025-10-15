@@ -1,4 +1,5 @@
-import { SidebarDashboard } from "./_components/sidebar"
+import { SidebarDashboard } from "./_components/sidebar";
+import { Toaster } from 'sonner';
 
 export default function DashboardLayout({
     children,
@@ -8,6 +9,7 @@ export default function DashboardLayout({
     return (
         <>
             <SidebarDashboard>
+                <Toaster duration={2500}/>
                 {children}
             </SidebarDashboard>
         </>
