@@ -1,4 +1,5 @@
 import { getAllServices } from "../_data-access/gel-all-services";
+import { ServicesList } from "./services-list";
 
 interface ServicesContentProps {
     userId: string;
@@ -10,7 +11,7 @@ export async function ServicesContent({ userId }: ServicesContentProps) {
     console.log(services);
     return(
         <div>
-            All Servicoes
+            <ServicesList/>
         </div>
     )
 }
