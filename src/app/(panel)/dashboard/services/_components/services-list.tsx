@@ -19,11 +19,17 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Pencil, Plus, X } from "lucide-react";
 import { DialogService } from "./dialog-service";
+import { Service } from "@/generated/prisma/client";
+import { formatCurrency } from "@/utils/formatCurrency";
 
-export function ServicesList() {
+interface ServiceListPros{
+    services: Service[]
+}
 
+export function ServicesList({ services }: ServiceListPros) {
+    console.log(services);
     const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
     return(
@@ -45,6 +51,40 @@ export function ServicesList() {
                             />
                         </DialogContent>
                     </CardHeader>
+                    
+                    <CardContent>
+                        <section className="space-y-4 mt-5">
+                                {services.map(service => (
+                                    <article 
+                                        key={service.id}
+                                        className="flex items-center justify-between"
+                                    >
+                                        <div className="flex items-center space-x-2">
+                                            <span className="font-light">{service.name}</span>
+                                            <span className="text-gray-500">-</span>
+                                            <span className="text-gray-500">{formatCurrency(service.price / 100)}</span>
+                                        </div>
+                                        <div className="">
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                onClick={ () => {}}
+                                            >
+                                                <Pencil className="w-4 h-4"></Pencil>
+                                            </Button>
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                onClick={ () => {}}
+                                            >
+                                                <X className="w-4 h-4"></X>
+                                            </Button>
+                                        </div>
+                                    </article>
+                                ))}
+                        </section>
+                    </CardContent>
+
                 </Card>
             </section>
         </Dialog>
