@@ -29,7 +29,6 @@ interface ServiceListPros{
 }
 
 export function ServicesList({ services }: ServiceListPros) {
-    console.log(services);
     const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
     return(

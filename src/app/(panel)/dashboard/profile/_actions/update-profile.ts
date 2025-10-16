@@ -59,6 +59,4 @@ export async function updateProfile(formData: FormSchema){
             error: "Error Updating user"
         }
     }
-
-    console.log(formData);
 }
