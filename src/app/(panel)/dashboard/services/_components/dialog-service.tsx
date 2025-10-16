@@ -13,13 +13,16 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { convertToCents } from "@/utils/convertCurrency";
 
 export function DialogService(){
 
     const form = useDialogServiceForm();
 
     async function onSubmit(values:DialogServiceFormData) {
-        
+        const priceInCents = convertToCents(values.price);
+            
+        console.log(values);
     }
 
     function changeCurrency(event: React.ChangeEvent<HTMLInputElement>){
