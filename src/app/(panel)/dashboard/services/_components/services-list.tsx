@@ -32,14 +32,20 @@ interface ServiceListPros{
 
 export function ServicesList({ services }: ServiceListPros) {
     const [dialogIsOpen, setDialogIsOpen] = useState(false);
+    const [editingService, setEditingService] = useState<null | Service>(null);
 
     async function handleDeleteService(serviceId: string){
-        const response = await deleteService({ serviceId: serviceId})
+        const response = await deleteService({ serviceId: serviceId});
         if(response.error){
             toast.error(response.error);
             return;
         }
         toast.success(response.data);
+    }
+
+    function handleEditService(service: Service){
+        setEditingService(service);
+        setDialogIsOpen(true);
     }
 
     return(
@@ -58,6 +64,13 @@ export function ServicesList({ services }: ServiceListPros) {
                                 closeModal={ () => {
                                     setDialogIsOpen(false);
                                 }}
+                                serviceId={editingService ? editingService.id : undefined}
+                                initialValues={editingService ? {
+                                    name: editingService.name,
+                                    price: (editingService.price / 100).toFixed(2).replace(".", ","),
+                                    hours: Math.floor(editingService.duration / 60).toString(),
+                                    minutes: (editingService.duration % 60).toString()
+                                } : undefined }
                             />
                         </DialogContent>
                     </CardHeader>
@@ -78,7 +91,7 @@ export function ServicesList({ services }: ServiceListPros) {
                                             <Button
                                                 variant="ghost"
                                                 size="icon"
-                                                onClick={ () => {}}
+                                                onClick={ () => handleEditService(service)}
                                             >
                                                 <Pencil className="w-4 h-4"></Pencil>
                                             </Button>
