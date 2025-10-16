@@ -41,10 +41,10 @@ export async function createNewService(formData:FormSchema) {
             
             return {
                 data: newService
-            }
+            };
         }catch(err){
             return{
-                error: err
+                error: "Error"
             }
         }
 }

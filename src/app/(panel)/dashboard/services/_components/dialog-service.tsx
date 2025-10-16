@@ -15,12 +15,20 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { convertToCents } from "@/utils/convertCurrency";
 import { createNewService } from "../_actions/create-service";
+import { toast } from "sonner";
+import { useState } from "react";
 
-export function DialogService(){
+interface DialogServiceProps {
+    closeModal: () => void;
+}
+
+export function DialogService({ closeModal }: DialogServiceProps){
 
     const form = useDialogServiceForm();
+    const [loading, setLoading] = useState(false);
 
     async function onSubmit(values:DialogServiceFormData) {
+        setLoading(true);
         const priceInCents = convertToCents(values.price);
         const hours = parseInt(values.hours) || 0;
         const minutes = parseInt(values.minutes) || 0;
@@ -32,8 +40,19 @@ export function DialogService(){
             price: priceInCents,
             duration: duration
         })
+        setLoading(false);
 
-        console.log(response);
+        if(response.error){
+            toast.error(response.error);
+            return;
+        }
+        toast.success("Service created");
+        handleCloseModal();
+    }
+
+    function handleCloseModal(){
+        form.reset();
+        closeModal();
     }
 
     function changeCurrency(event: React.ChangeEvent<HTMLInputElement>){
@@ -124,8 +143,8 @@ export function DialogService(){
                         />
                     </div>
 
-                    <Button type="submit" className="w-full font-semibold text-white">
-                        Create Service
+                    <Button type="submit" className="w-full font-semibold text-white" disabled={loading}>
+                        {loading ? "Loading..." : "Create Service"}
                     </Button>
                 </form>
             </Form>
