@@ -34,6 +34,12 @@ interface ScheduleContentProps{
 
 export function ScheduleContent({ business }: ScheduleContentProps){
     const form = useAppointmentForm();
+    const { watch } = form;
+
+    async function handleRegisterAppointment(formData:AppointmentFormData) {
+        console.log(formData);
+    }
+
     return (
         <div className="min-h-screen flex flex-col">
             <div className="h-32 bg-emerald-500"/>
@@ -60,7 +66,10 @@ export function ScheduleContent({ business }: ScheduleContentProps){
 
             <section className="max-w-2xl mx-auto w-full mt-6">
                 <Form {...form}>
-                    <form className="mx-2 space-y-6 bg-white p-6 border rounded-md shadow-sm">
+                    <form 
+                        onSubmit={form.handleSubmit(handleRegisterAppointment)}
+                        className="mx-2 space-y-6 bg-white p-6 border rounded-md shadow-sm"
+                    >
                         <FormField
                             control={form.control}
                             name="name"
@@ -165,6 +174,22 @@ export function ScheduleContent({ business }: ScheduleContentProps){
                                 </FormItem>
                             )}
                         />
+
+                        {business.status ? (
+                            <Button
+                                type="submit"
+                                className="w-full bg-emerald-500 hover:bg-emerald-400"
+                                disabled={!watch("name") || !watch("email") || !watch("phone") || !watch("date")}
+                            >
+                                Schedule Appointment
+                            </Button>
+                        ) : (
+                            <p className="bg-red-500 text-white text-center px-4 py-2 rounded-md">
+                                Business is Inactive
+                            </p>
+                        )}
+                        
+
                     </form>
                 </Form>
             </section>
