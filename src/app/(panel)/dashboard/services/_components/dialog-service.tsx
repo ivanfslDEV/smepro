@@ -18,6 +18,7 @@ import { createNewService } from "../_actions/create-service";
 import { toast } from "sonner";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { updateService } from "../_actions/update-service";
 
 interface DialogServiceProps {
     closeModal: () => void;
@@ -49,7 +50,8 @@ export function DialogService({ closeModal, serviceId, initialValues }: DialogSe
                 name: values.name,
                 priceInCents: priceInCents,
                 duration: duration
-            })
+            });
+            return;
         }
 
         const response = await createNewService({
@@ -79,9 +81,22 @@ export function DialogService({ closeModal, serviceId, initialValues }: DialogSe
             duration: number
         }
     ) {
+        const response = await updateService({
+            serviceId: serviceId,
+            name: name,
+            price: priceInCents,
+            duration: duration
+        })
 
+        if(response.error){
+            toast.error(response.error);
+            return;
+        }
 
+        setLoading(false);
 
+        toast.success(response.data);
+        handleCloseModal();
     }
 
     function handleCloseModal(){
