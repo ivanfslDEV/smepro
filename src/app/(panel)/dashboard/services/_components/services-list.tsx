@@ -3,6 +3,7 @@
 import { useState } from "react";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -34,6 +35,14 @@ export function ServicesList({ services }: ServiceListPros) {
     const [dialogIsOpen, setDialogIsOpen] = useState(false);
     const [editingService, setEditingService] = useState<null | Service>(null);
 
+    function handleDialogChange(open: boolean) {
+        setDialogIsOpen(open);
+        if (!open) {
+        console.log("[ServicesList] Dialog closed"); // <-- aqui o console
+        setEditingService(null);
+        }
+    }
+
     async function handleDeleteService(serviceId: string){
         const response = await deleteService({ serviceId: serviceId});
         if(response.error){
@@ -49,7 +58,7 @@ export function ServicesList({ services }: ServiceListPros) {
     }
 
     return(
-        <Dialog open={dialogIsOpen} onOpenChange={setDialogIsOpen}>
+        <Dialog open={dialogIsOpen} onOpenChange={handleDialogChange}>
             <section className="mx-auto">
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -63,6 +72,7 @@ export function ServicesList({ services }: ServiceListPros) {
                             <DialogService
                                 closeModal={ () => {
                                     setDialogIsOpen(false);
+                                    setEditingService(null);
                                 }}
                                 serviceId={editingService ? editingService.id : undefined}
                                 initialValues={editingService ? {

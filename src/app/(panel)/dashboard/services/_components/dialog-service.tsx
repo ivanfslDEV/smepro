@@ -31,7 +31,6 @@ interface DialogServiceProps {
 }
 
 export function DialogService({ closeModal, serviceId, initialValues }: DialogServiceProps){
-
     const form = useDialogServiceForm({initialValues: initialValues });
     const [loading, setLoading] = useState(false);
     const router = useRouter();
@@ -44,6 +43,15 @@ export function DialogService({ closeModal, serviceId, initialValues }: DialogSe
 
         const duration = (hours * 60) + minutes;
         
+        if(serviceId){
+            await editServiceById({
+                serviceId: serviceId,
+                name: values.name,
+                priceInCents: priceInCents,
+                duration: duration
+            })
+        }
+
         const response = await createNewService({
             name: values.name,
             price: priceInCents,
@@ -58,6 +66,22 @@ export function DialogService({ closeModal, serviceId, initialValues }: DialogSe
         toast.success("Service created");
         handleCloseModal();
         router.refresh();
+    }
+
+    async function editServiceById({ 
+        serviceId, 
+        name, 
+        priceInCents, 
+        duration }: {
+            serviceId: string,
+            name: string,
+            priceInCents: number,
+            duration: number
+        }
+    ) {
+
+
+
     }
 
     function handleCloseModal(){
@@ -154,7 +178,7 @@ export function DialogService({ closeModal, serviceId, initialValues }: DialogSe
                     </div>
 
                     <Button type="submit" className="w-full font-semibold text-white" disabled={loading}>
-                        {loading ? "Loading..." : "Create Service"}
+                        {loading ? "Loading..." : `${serviceId ? "Update Service" : "Create Service"}`}
                     </Button>
                 </form>
             </Form>
