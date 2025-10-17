@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { formatPhone } from "@/utils/formatPhone";
 import { DateTimePicker } from "./date-picker";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type UserWithServiceAndSubscription = Prisma.UserGetPayload<{
     include: {
@@ -120,7 +121,7 @@ export function ScheduleContent({ business }: ScheduleContentProps){
                             control={form.control}
                             name="date"
                             render={({field}) => (
-                                <FormItem className="flex items-center gap-2 space-y-1">
+                                <FormItem className="flex items-center gap-2 space-y-1 mt-5">
                                     <FormLabel className="font-semibold">Appointment Date:</FormLabel>
                                     <FormControl>
                                         <DateTimePicker
@@ -132,6 +133,33 @@ export function ScheduleContent({ business }: ScheduleContentProps){
                                                 }
                                             }}
                                         />
+                                    </FormControl>
+                                    <FormMessage/>
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="serviceId"
+                            render={({field}) => (
+                                <FormItem className="my-2 mt-3 max-w-full">
+                                    <FormLabel className="font-semibold">Select a Service:</FormLabel>
+                                    <FormControl>
+                                        <Select
+                                            onValueChange={field.onChange}
+                                        >
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Select a Service" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {business.services.map((service) => (
+                                                    <SelectItem key={service.id} value={service.id}>
+                                                        {service.name}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
                                     </FormControl>
                                     <FormMessage/>
                                 </FormItem>
