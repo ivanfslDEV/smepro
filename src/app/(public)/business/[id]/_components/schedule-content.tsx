@@ -21,6 +21,7 @@ import { formatPhone } from "@/utils/formatPhone";
 import { DateTimePicker } from "./date-picker";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useCallback, useEffect, useState } from "react";
+import { ScheduleTimeList } from "./schedule-time-list";
 
 type UserWithServiceAndSubscription = Prisma.UserGetPayload<{
     include: {
@@ -33,7 +34,7 @@ interface ScheduleContentProps{
     business: UserWithServiceAndSubscription
 }
 
-interface TimeSlot {
+export interface TimeSlot {
     time: string;
     available: boolean;
 }
@@ -221,6 +222,32 @@ export function ScheduleContent({ business }: ScheduleContentProps){
                                 </FormItem>
                             )}
                         />
+
+                        { selectedServiceId && (
+                            <div className="space-y-2">
+                                <Label className="font-semibold">Available Times:</Label>
+                                <div className="bg-gray-100 p-4 rounded-lg">
+                                    {loadingSlots ? (
+                                        <p> Loading...</p>
+                                    ) : availableTimeSlots.length === 0 ? (
+                                        <p>No Available Times</p>
+                                    ): (
+                                        <ScheduleTimeList
+                                            onSelectTime={(time) => setSelectedTime(time)}
+                                            businessTimes={business.times}
+                                            blockedTimes={blockedTimes}
+                                            availableTimeSlots={availableTimeSlots}
+                                            selectedTime={selectedTime}
+                                            selectedDate={selectedDate}
+                                            requiredSlots={
+                                                business.services.find(service => service.id === selectedServiceId) ? Math.ceil(business.services.find(service => 
+                                                service.id === selectedServiceId )!.duration / 30) : 1
+                                            }
+                                        />
+                                    )}
+                                </div>
+                            </div>
+                        )}
 
                         {business.status ? (
                             <Button
