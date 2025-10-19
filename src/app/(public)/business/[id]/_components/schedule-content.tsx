@@ -79,8 +79,16 @@ export function ScheduleContent({ business }: ScheduleContentProps){
                     time: time,
                     available: !blocked.includes(time)
                 }));
-
+                
                 setAvailableTimeSlots(finalSlots);
+
+                const stillAvailable = finalSlots.find(
+                    (slot) => slot.time === selectedTime && slot.available
+                )
+
+                if(!stillAvailable){
+                    setSelectedTime("");
+                }
             })
         }
 
