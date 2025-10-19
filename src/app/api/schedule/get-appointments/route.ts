@@ -19,10 +19,52 @@ export async function GET(request: NextRequest) {
         const startDate = new Date(year, month - 1, day, 0, 0, 0);
         const endDate = new Date(year, month - 1, day, 23, 59, 59, 999);
 
-         return NextResponse.json({
-            ok: true
+        const user = await prisma.user.findFirst({
+            where:{
+                id: userId
+            }
         });
 
+        if(!user){
+            return NextResponse.json({
+                error: "User Not Found"
+            }, {
+                status: 400
+            });
+        };
+
+        const appointments = await prisma.appointment.findMany({
+            where:{
+                userId: userId,
+                appointmentDate:{
+                    gte: startDate,
+                    lte: endDate
+                }
+            },
+            include:{
+                service:true
+            }
+        })
+        
+        const blockedSlots = new Set<string>();
+
+        for(const apt of appointments){
+            const requiredSlots = Math.ceil(apt.service.duration / 30);
+            const startIndex = user.times.indexOf(apt.time);
+
+            if(startIndex !== -1){
+                for(let i = 0; i < requiredSlots; i++){
+                    const blockedSlot = user.times[startIndex + 1];
+                    if(blockedSlots){
+                        blockedSlots.add(blockedSlot);
+                    }
+                }
+            }
+        }
+
+        const blockedTimes = Array.from(blockedSlots);
+
+        return NextResponse.json(blockedTimes);
     }catch(err){
         return NextResponse.json({
             error: "Not Found"

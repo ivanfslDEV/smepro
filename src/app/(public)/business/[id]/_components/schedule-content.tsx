@@ -55,7 +55,9 @@ export function ScheduleContent({ business }: ScheduleContentProps){
             const dateString = date.toISOString().split('T')[0];
             const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/schedule/get-appointments?userId=${business.id}&date=${dateString}`);
             
-            return [];
+            const json = await response.json();
+            setLoadingSlots(false);
+            return json;
         }catch(err){
             setLoadingSlots(false);
             return [];
@@ -66,7 +68,16 @@ export function ScheduleContent({ business }: ScheduleContentProps){
 
         if(selectedDate){
             fetchBlockedTimes(selectedDate).then((blocked) => {
-                console.log(blocked);
+                setBlockedTimes(blocked);
+
+                const times = business.times || [];
+
+                const finalSlots = times.map((time) => ({
+                    time: time,
+                    available: !blocked.includes(time)
+                }));
+
+                setAvailableTimeSlots(finalSlots);
             })
         }
 
