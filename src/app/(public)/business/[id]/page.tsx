@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getInfoSchedule } from "./_data-access/get-info-schedule";
 import { ScheduleContent } from "./_components/schedule-content";
+import { Toaster } from 'sonner';
 
 export default async function SchedulePage({
     params
@@ -15,6 +16,9 @@ export default async function SchedulePage({
     }
 
     return(
-        <ScheduleContent business={user}/>
+        <>
+            <Toaster duration={2500}/>
+            <ScheduleContent business={user}/>
+        </>   
     )
 }
