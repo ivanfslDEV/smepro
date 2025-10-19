@@ -5,9 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Reminder } from "@/generated/prisma";
 import { Plus, Trash } from "lucide-react";
-import { deleteReminder } from "../_actions/delete-reminder";
+import { deleteReminder } from "../../_actions/delete-reminder";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { DialogDescription } from "@radix-ui/react-dialog";
+import { ReminderContent } from "./reminder-content";
 
 interface ReminderListProps {
     reminder: Reminder[]
@@ -35,12 +38,22 @@ export function ReminderList({ reminder }: ReminderListProps){
                     <CardTitle className="text-xl md:text-2xl font-bold">
                         Reminders
                     </CardTitle>
-                    <Button
-                        variant="ghost"
-                        className="w-9 p-0"
-                    >
-                        <Plus className="w-5 h-5"/>
-                    </Button>
+
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button variant="ghost" className="w-9 p-0">
+                                <Plus className="w-5 h-5" />
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-[425px]">
+                            <DialogHeader>
+                                <DialogTitle>New Reminder</DialogTitle>
+                                <DialogDescription>Create a new reminder</DialogDescription>
+                            </DialogHeader>
+
+                            <ReminderContent/>
+                        </DialogContent>
+                    </Dialog>
                 </CardHeader>
                 <CardContent>
                     {reminder.length === 0 && (
