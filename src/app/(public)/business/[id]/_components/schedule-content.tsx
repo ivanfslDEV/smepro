@@ -20,6 +20,7 @@ import { Label } from "@/components/ui/label";
 import { formatPhone } from "@/utils/formatPhone";
 import { DateTimePicker } from "./date-picker";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useState } from "react";
 
 type UserWithServiceAndSubscription = Prisma.UserGetPayload<{
     include: {
@@ -32,9 +33,20 @@ interface ScheduleContentProps{
     business: UserWithServiceAndSubscription
 }
 
+interface TimeSlot {
+    time: string;
+    available: boolean;
+}
+
 export function ScheduleContent({ business }: ScheduleContentProps){
     const form = useAppointmentForm();
     const { watch } = form;
+
+    const [selectedTime, setSelectedTime] = useState("");
+    const [availableTimeSlots, setAvailableTimeSlots] = useState<TimeSlot[]>([]);
+    const [loadingSlots, setLoadingSlots] = useState([]);
+    const [blockedTimes, setBlockedTimes] = useState<string[]>([]);
+
 
     async function handleRegisterAppointment(formData:AppointmentFormData) {
         console.log(formData);
