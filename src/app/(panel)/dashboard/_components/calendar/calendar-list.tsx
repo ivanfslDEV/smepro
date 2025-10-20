@@ -43,7 +43,9 @@ export function CalendarList({times}: CalendarListProps){
             }
 
             return json;
-        }
+        },
+        staleTime: 20000,
+        refetchInterval: 30000
     });
 
     const hasData = Array.isArray(data) ? data.length > 0 : data != null;
