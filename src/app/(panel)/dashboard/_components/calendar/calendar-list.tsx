@@ -3,15 +3,40 @@
 import { useSearchParams } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useQuery } from "@tanstack/react-query";
+import { format } from "date-fns";
 
 interface CalendarListProps{
     times: string[]
 }
 
 export function CalendarList({times}: CalendarListProps){
-
     const searchParams = useSearchParams();
-    const date = searchParams.get("date")
+    const date = searchParams.get("date");
+
+    const {data, isLoading } = useQuery({
+        queryKey: ["get-calendar", date],
+        queryFn: async () => {
+            let activeDate = date;
+
+            if(!activeDate){
+                const today = format(new Date(), "yyyy-MM-dd");
+                activeDate = today;
+            }
+
+            const url = `${process.env.NEXT_PUBLIC_URL}/api/business/calendar?date=${activeDate}`;
+
+            const response = await fetch(url);
+
+            const json = await response.json();
+            
+            if(!response.ok){
+                return [];
+            }
+
+            return json;
+        }
+    })
 
     return (
         <Card>
