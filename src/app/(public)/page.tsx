@@ -4,7 +4,7 @@ import { Hero } from "./_components/hero";
 import { Professionals } from "./_components/professionals";
 import { getProfessionals } from "./_data-access/get-professionals";
 
-export const revalidate = 120;
+//export const revalidate = 120;
 
 export default async function Home() {
 
