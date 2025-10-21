@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { DialogCalendar } from "./dialog-calendar";
+import { ButtonPickerAppointment } from "./button-date";
 
 export type AppointmentWithService = Prisma.AppointmentGetPayload<{
     include:{
@@ -98,7 +99,7 @@ export function CalendarList({times}: CalendarListProps){
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-xl md:text-2xl font-bold">Schedule</CardTitle>
-                    <button>SELECT A DATE</button>
+                    <ButtonPickerAppointment/>
                 </CardHeader>
 
                 <CardContent>
@@ -122,7 +123,7 @@ export function CalendarList({times}: CalendarListProps){
 
                                             <div className="ml-auto">
                                                 <div className="flex">
-                                                    <DialogTrigger>
+                                                    <DialogTrigger asChild>
                                                         <Button
                                                             variant="ghost"
                                                             size="icon"
