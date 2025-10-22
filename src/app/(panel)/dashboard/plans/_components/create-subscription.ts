@@ -20,7 +20,69 @@ export async function createSubscription({type}:SubscriptionProps) {
         }
     }
 
-    console.log("1) ",type);
+    const findUser = await prisma.user.findFirst({
+        where:{
+            id: userId
+        }
+    });
+
+    if(!findUser){
+        return {
+            sessionId: "",
+            error: "Erro on subscription"
+        }
+    }
+
+    let customerId = findUser.stripe_customer_id;
+
+    if(!customerId){
+        const stripeCustomer = await stripe.customers.create({
+            email: findUser.email
+        });
+
+        await prisma.user.update({
+            where:{
+                id: userId
+            },
+            data:{
+                stripe_customer_id: stripeCustomer.id
+            }
+        });
+
+        customerId = stripeCustomer.id;
+    }
+
+    try{
+        const stripeCheckoutSession = await stripe.checkout.sessions.create({
+            customer: customerId,
+            payment_method_types: ["card"],
+            billing_address_collection: "required",
+            line_items:[
+                {
+                    price: type === "BASIC" ? process.env.STRIPE_PLAN_BASIC : process.env.STRIPE_PLAN_PROFISSIONAL,
+                    quantity: 1
+                }
+            ],
+            metadata:{
+                type: type
+            },
+            mode: "subscription",
+            allow_promotion_codes: true,
+            success_url: process.env.STRIPE_SUCCESS_URL,
+            cancel_url: process.env.STRIPE_CANCEl_URL
+        });
+
+        return{
+            sessionId: stripeCheckoutSession.id,
+            url: stripeCheckoutSession.url
+        }
+
+    }catch(err){
+        return {
+            sessionId: "",
+            error: "Erro on subscription"
+        }
+    }
 
     return {
         sessionId: "123"
