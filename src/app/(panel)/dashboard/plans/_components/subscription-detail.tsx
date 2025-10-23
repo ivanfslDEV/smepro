@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { subscriptionPlans } from "@/utils/plans/index";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { createPortalCustomer } from "../_actions/create-portal-customer";
 
 
 interface SubscriptionDetailProps{
@@ -16,7 +17,14 @@ export function SubscriptionDetail({subscription}: SubscriptionDetailProps){
     const subscriptionInfo = subscriptionPlans.find( plan => plan.id === subscription.plan);
 
     async function handleManageSubscription() {
-        console.log("teste")
+        const portal = await createPortalCustomer();
+
+        if(portal.error){
+            toast.error("Error");
+            return;
+        }
+
+        window.location.href = portal.sessionId;
     }
 
     return(
