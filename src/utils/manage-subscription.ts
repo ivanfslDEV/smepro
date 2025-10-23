@@ -38,7 +38,8 @@ export async function manageSubscription(
             where:{
                 id: subscriptionId
             }
-        })
+        });
+        return;
     }
 
     if(createAction){
@@ -66,8 +67,7 @@ export async function manageSubscription(
                 },
                 data:{
                     status: subscription.status,
-                    priceId: subscription.items.data[0].price.id,
-                    plan: type ?? "BASIC"
+                    priceId: subscription.items.data[0].price.id
                 }
             })
 
