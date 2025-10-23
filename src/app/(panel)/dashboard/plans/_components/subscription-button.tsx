@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Plan } from "@/generated/prisma";
-import { createSubscription } from "./create-subscription";
+import { createSubscription } from "../_actions/create-subscription";
 import { toast } from "sonner";
 import { getStripeJs } from "@/utils/stripe-js";
 
