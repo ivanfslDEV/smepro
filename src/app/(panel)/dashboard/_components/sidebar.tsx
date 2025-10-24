@@ -19,7 +19,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Banknote, CalendarCheck2, ChevronLeft, ChevronRight, Folder, List, Settings } from "lucide-react";
 import Link from "next/link";
-import logoImg from "../../../../../public/logo-odonto.png"
+import logoImg from "../../../../../public/logo-smepro.png"
 import Image from "next/image";
 
 export function SidebarDashboard ({ children }: { children: React.ReactNode}){
