@@ -9,7 +9,7 @@ export default function DashboardLayout({
     return (
         <>
             <SidebarDashboard>
-                <Toaster duration={2500}/>
+                <Toaster duration={2500}  richColors/>
                 {children}
             </SidebarDashboard>
         </>
