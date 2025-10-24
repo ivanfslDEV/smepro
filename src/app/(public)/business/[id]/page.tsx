@@ -17,7 +17,7 @@ export default async function SchedulePage({
 
     return(
         <>
-            <Toaster duration={2500} richColors/>
+            <Toaster duration={2500} position="top-center" richColors/>
             <ScheduleContent business={user}/>
         </>   
     )

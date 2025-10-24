@@ -9,7 +9,7 @@ export default function DashboardLayout({
     return (
         <>
             <SidebarDashboard>
-                <Toaster duration={2500}  richColors/>
+                <Toaster duration={2500} position="top-center"  richColors/>
                 {children}
             </SidebarDashboard>
         </>
