@@ -16,7 +16,7 @@ export async function cancelAppointment(formData:FormSchema) {
     
     if(!session?.user?.id){
         return {
-            error: "Error"
+            error: "No account found"
         }
     }
     
@@ -39,11 +39,11 @@ export async function cancelAppointment(formData:FormSchema) {
         revalidatePath("/dashboard");
 
         return{
-            data:"Appointment Canceled!"
+            data:"Appointment canceled"
         }
     }catch(err){
         return{
-            error: "Error"
+            error: "Something went wrong. Please try again later."
         }
     }
 }

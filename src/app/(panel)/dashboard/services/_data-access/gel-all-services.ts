@@ -23,7 +23,7 @@ export async function getAllServices({ userId }: {userId: string}) {
         }
     }catch(err){
         return {
-            error: "Error in Services"
+            error: "Something went wrong. Please try again later."
         }
     }
 }

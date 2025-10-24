@@ -40,7 +40,7 @@ export const GET = auth(async function GET(request) {
 
     return NextResponse.json(appointments);
   }catch(err){
-    return NextResponse.json({error: "Error"}, {status: 400});
+    return NextResponse.json({error: "Something went wrong. Please try again later."}, {status: 400});
   }
 
 })

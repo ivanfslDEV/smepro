@@ -24,9 +24,9 @@ export const subscriptionPlans = [
         oldPrice: "50,00 €",
         price: "27,90 €",
         features: [
-            `Max ${PLANS["BASIC"].maxServices} services`,
-            "Ilimited Appointments",
-            "Support"
+            `Includes up to ${PLANS["BASIC"].maxServices} services`,
+            "Support 9 AM – 6 PM",
+            "Unlimited Appointments",
         ]
 
     },
@@ -37,10 +37,9 @@ export const subscriptionPlans = [
         oldPrice: "100,00 €",
         price: "97,90 €",
         features: [
-            `Max ${PLANS["PROFESSIONAL"].maxServices} services`,
-            "Ilimited Appointments",
-            "Support",
-            "Lorem ypsom"
+            `Includes up to ${PLANS["PROFESSIONAL"].maxServices} services`,
+            "Support available all day",
+            "Unlimited Appointments",
         ]
 
     }

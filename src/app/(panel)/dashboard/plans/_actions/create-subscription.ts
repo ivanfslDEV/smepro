@@ -80,11 +80,7 @@ export async function createSubscription({type}:SubscriptionProps) {
     }catch(err){
         return {
             sessionId: "",
-            error: "Erro on subscription"
+            error: "Something went wrong. Please try again later."
         }
-    }
-
-    return {
-        sessionId: "123"
     }
 }

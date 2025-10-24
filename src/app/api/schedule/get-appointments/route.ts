@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
         return NextResponse.json(blockedTimes);
     }catch(err){
         return NextResponse.json({
-            error: "Not Found"
+            error: "Something went wrong. Please try again later."
         }, {
             status: 400
         });

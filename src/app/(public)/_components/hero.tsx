@@ -10,10 +10,10 @@ export function Hero() {
                 <main className="flex items-center justify-center">
                     <article className="flex-[2] max-w-3xl space-y-8 flex flex-col justify-center">
                         <h1 className="text-4xl lg:text-5xl font-bold max-w-2xl tracking-tight">
-                            Find the best Business at on place
+                            All the best businesses, in one place
                         </h1>
                         <p className="text-base md:text-lg text-gray-600">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                            Connecting you to the best businesses around — fast, simple, and all in one place
                         </p>
                         <Button className="bg-emerald-500 hover:bg-emerald-400 w-fit px-6 font-semibold">
                             Find a Business

@@ -48,7 +48,7 @@ export async function createPortalCustomer() {
     }catch(err){
         return{
             sessionId: "",
-            error: "User Not Found!"
+            error: "Something went wrong. Please try again later."
         }
     }
 

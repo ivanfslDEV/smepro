@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 const formSchema = z.object({
-    description: z.string().min(1, "Description is mandatory"),
+    description: z.string().min(1, "Please add a description."),
 });
 
 type FormSchema = z.infer<typeof formSchema>;
@@ -16,7 +16,7 @@ export async function createReminder(formData: FormSchema) {
 
     if(!session?.user?.id){
         return {
-            error: "Error"
+            error: "No account found"
         }
     }
 
@@ -39,12 +39,12 @@ export async function createReminder(formData: FormSchema) {
         revalidatePath("/dashboard")
 
         return{
-            data: "Reminder Created!"
+            data: "Reminder created"
         }
 
     }catch(err){
         return{
-            error: "Error"
+            error: "Something went wrong. Please try again later."
         }
     }
 }

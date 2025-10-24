@@ -36,7 +36,7 @@ export async function updateProfileAvatar({avatarUrl}:{avatarUrl: string}) {
         }
     }catch(err){
         return{
-            error: "Erro updating image"
+            error: "Something went wrong. Please try again later."
         }
     }
 }

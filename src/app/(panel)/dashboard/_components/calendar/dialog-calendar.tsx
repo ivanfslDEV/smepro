@@ -11,10 +11,10 @@ export function DialogCalendar({appointment }: DialogCalendarPros){
         <DialogContent>
             <DialogHeader>
                 <DialogTitle>
-                    Appointments Details
+                    Appointment Details
                 </DialogTitle>
                 <DialogDescription>
-                    See Appointments Details
+                    View Appointment Details
                 </DialogDescription>
             </DialogHeader>
             <div className="py-4">

@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 const formSchema = z.object({
-    reminderId: z.string().min(1, "Missing Id"),
+    reminderId: z.string().min(1, "ID is required."),
 });
 
 type FormSchema = z.infer<typeof formSchema>;
@@ -29,12 +29,12 @@ export async function deleteReminder(formData: FormSchema) {
         revalidatePath("/dashboard")
 
         return{
-            data: "Reminder Deleted!"
+            data: "Reminder deleted"
         }
 
     }catch(err){
         return{
-            error: "Error"
+            error: "Something went wrong. Please try again later."
         }
     }
 }

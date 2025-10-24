@@ -28,6 +28,8 @@ export async function getInfoSchedule({userId}:{userId: string}) {
 
         return user;
     }catch(err){
-
+        return{
+            error: "Something went wrong. Please try again later."
+        }
     }
 }

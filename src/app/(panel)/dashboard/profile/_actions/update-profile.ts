@@ -56,7 +56,7 @@ export async function updateProfile(formData: FormSchema){
 
     }catch(err){
         return{
-            error: "Error Updating user"
+            error: "Something went wrong. Please try again later."
         }
     }
 }

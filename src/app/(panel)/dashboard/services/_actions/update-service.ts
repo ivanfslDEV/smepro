@@ -51,7 +51,7 @@ export async function updateService(formData:FormSchema){
         }
     }catch(err){
         return{
-            error: "Error"
+            error: "Something went wrong. Please try again later."
         }
     }
 }

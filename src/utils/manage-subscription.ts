@@ -48,7 +48,7 @@ export async function manageSubscription(
                 data:subscriptionData
             })
         }catch(err){
-            console.log("error");
+            console.log("Something went wrong. Please try again later.");
         }
     }else{
         try{
@@ -72,7 +72,7 @@ export async function manageSubscription(
             })
 
         }catch(err){
-            console.log("error")
+            console.log("Something went wrong. Please try again later.")
         }
     }
 }
