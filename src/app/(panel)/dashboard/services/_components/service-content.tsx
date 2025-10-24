@@ -1,6 +1,7 @@
 import { CanPermission } from "@/utils/permissions/canPermission";
 import { getAllServices } from "../_data-access/gel-all-services";
 import { ServicesList } from "./services-list";
+import { LabelSubscription } from "@/components/ui/label-subscription";
 
 interface ServicesContentProps {
     userId: string;
@@ -12,8 +13,11 @@ export async function ServicesContent({ userId }: ServicesContentProps) {
     const permissions = await CanPermission({type: "service"});
 
     return(
-        <div>
+        <>
+            {!permissions.hasPermission && (
+                <LabelSubscription expired={permissions.expired}/>
+            )}
             <ServicesList services={services.data || []} permission={permissions}/>
-        </div>
+        </>
     )
 }
