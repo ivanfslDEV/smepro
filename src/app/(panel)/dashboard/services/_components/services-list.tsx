@@ -26,14 +26,19 @@ import { Service } from "@/generated/prisma/client";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { deleteService } from "../_actions/delete-service";
 import { toast } from "sonner";
+import { ResultPermissionProp } from "@/utils/permissions/canPermission";
+import Link from "next/link";
 
 interface ServiceListPros{
-    services: Service[]
+    services: Service[];
+    permission: ResultPermissionProp
 }
 
-export function ServicesList({ services }: ServiceListPros) {
+export function ServicesList({ services, permission }: ServiceListPros) {
     const [dialogIsOpen, setDialogIsOpen] = useState(false);
     const [editingService, setEditingService] = useState<null | Service>(null);
+
+    const servicesList = permission.hasPermission ? services : services.slice(0,3);
 
     function handleDialogChange(open: boolean) {
         setDialogIsOpen(open);
@@ -63,11 +68,18 @@ export function ServicesList({ services }: ServiceListPros) {
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-xl md:text-2xl font-bold">Services</CardTitle>
-                        <DialogTrigger asChild>
-                            <Button>
-                                <Plus className="w-4 h-4"/>
-                            </Button>
-                        </DialogTrigger>
+                        {permission.hasPermission && (
+                            <DialogTrigger asChild>
+                                <Button>
+                                    <Plus className="w-4 h-4"/>
+                                </Button>
+                            </DialogTrigger>
+                        )}
+                        {!permission.hasPermission && (
+                            <Link href="/dashboard/plans" className="text-red-500">
+                                Service limit reached
+                            </Link>
+                        )}
                         <DialogContent>
                             <DialogService
                                 closeModal={ () => {
@@ -87,7 +99,7 @@ export function ServicesList({ services }: ServiceListPros) {
                     
                     <CardContent>
                         <section className="space-y-4 mt-5">
-                                {services.map(service => (
+                                {servicesList.map(service => (
                                     <article 
                                         key={service.id}
                                         className="flex items-center justify-between"
