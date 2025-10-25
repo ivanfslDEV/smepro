@@ -4,32 +4,14 @@ import prisma from "@/lib/prisma";
 
 export async function getInfoSchedule({userId}:{userId: string}) {
     try{
-        if(!userId){
-            return null;
-        }
-
-        const user = await prisma.user.findFirst({
-            where: {
-                id: userId
-            },
+        return await prisma.user.findUnique({
+            where: { id: userId },
             include: {
                 subscription: true,
-                services: {
-                    where: {
-                        status: true
-                    }
-                }
-            }
-        })
-
-        if(!user){
-            return null;
-        }
-
-        return user;
+                services: { where: { status: true } },
+            },
+        });
     }catch(err){
-        return{
-            error: "Something went wrong. Please try again later."
-        }
+        return null;
     }
 }
