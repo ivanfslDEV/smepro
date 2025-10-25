@@ -2,6 +2,10 @@ import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
+export type AppointmentWithService = Awaited<
+  ReturnType<typeof prisma.appointment.findMany>
+>[number] & { service: NonNullable<unknown> };
+
 export const GET = auth(async function GET(request) {
   if(!request.auth){
     return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
@@ -38,7 +42,7 @@ export const GET = auth(async function GET(request) {
         }
     })
 
-    return NextResponse.json(appointments);
+    return NextResponse.json<AppointmentWithService[]>(appointments, { status: 200 });
   }catch(err){
     return NextResponse.json({error: "Something went wrong. Please try again later."}, {status: 400});
   }

@@ -34,7 +34,7 @@ export function CalendarList({times}: CalendarListProps){
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [detailAppointment, setDetailAppointment] = useState<AppointmentWithService|null>(null);
 
-    const {data, isLoading, refetch } = useQuery({
+    const {data = [] as AppointmentWithService[], isLoading, refetch } = useQuery({
         queryKey: ["get-calendar", date],
         queryFn: async () => {
             let activeDate = date;
@@ -53,8 +53,7 @@ export function CalendarList({times}: CalendarListProps){
             if(!response.ok){
                 return [];
             }
-
-            return json;
+            return Array.isArray(json) ? (json as AppointmentWithService[]) : ([] as AppointmentWithService[]);
         },
         staleTime: 20000,
         refetchInterval: 30000
