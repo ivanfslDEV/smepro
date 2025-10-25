@@ -8,7 +8,7 @@ export function GridPlans(){
             {subscriptionPlans.map((plan, index) => (
                 <Card 
                     key={plan.id} 
-                    className={`flex flex-col w-full mx-auto ${index === 1 && "border-emerald-500"}`}
+                    className={`flex flex-col w-full  h-full mx-auto ${index === 1 && "border-emerald-500"}`}
                 >
                     {index === 1 && (
                         <div className="bg-emerald-500 w-full py-3 text-center rounded-t-xl mt-[-25px]">
@@ -38,7 +38,7 @@ export function GridPlans(){
                             <p className="text-black text-2xl font-bold">{plan.price}</p>
                         </div>
                     </CardContent>
-                    <CardFooter>
+                    <CardFooter className="mt-auto">
                         <SubscriptionButton
                             type={plan.id === "BASIC" ? "BASIC" : "PROFESSIONAL"}
                         />

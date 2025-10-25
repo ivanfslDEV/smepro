@@ -12,7 +12,8 @@ export async function canCreateService(subscription:Subscription | null, session
     try{
         const serviceCount = await prisma.service.count({
             where:{
-                userId: session?.user?.id
+                userId: session?.user?.id,
+                status: true,
             }
         });
 
@@ -21,7 +22,7 @@ export async function canCreateService(subscription:Subscription | null, session
             const planLimits = await getPlan(plan);
 
             return {
-                hasPermission: planLimits.maxServices === null || serviceCount <= planLimits.maxServices,
+                hasPermission: planLimits.maxServices === null || serviceCount < planLimits.maxServices,
                 planId: subscription.plan,
                 expired: false,
                 plan: PLANS[subscription.plan],
