@@ -12,10 +12,17 @@ import Image from "next/image";
 import photoImg from "../../../../public/foto1.png";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { User } from "@/generated/prisma";
+import { Prisma, User } from "@/generated/prisma";
+import { PremiumCardBadge } from "./premium-badge";
+
+type UserWithSubscription = Prisma.UserGetPayload<{
+    include:{
+        subscription:true
+    }
+}>
 
 interface ProfessionalsProps{
-    professionals: User[]
+    professionals: UserWithSubscription[]
 }
 
 export function Professionals({professionals}: ProfessionalsProps) {
@@ -35,21 +42,20 @@ export function Professionals({professionals}: ProfessionalsProps) {
                                             fill
                                             className="object-cover"
                                         />
+                                        {business?.subscription?.status === "active" && business?.subscription?.plan === "PROFESSIONAL" && <PremiumCardBadge/>}
                                     </div>
                                 </div>
 
-                                <div className="p-4 space-y-4">
+                                <div className="p-4 space-y-4 min-h-[160px] flex flex-col justify-between">
                                     <div className="flex items-center justify-between">
                                         <div>
                                             <h3 className="font-semibold">
                                                 {business.name}
                                             </h3>
-                                            <p className="text-sm text-gray-500">
+                                            <p className="text-sm text-gray-500 line-clamp-2">
                                                 {business.address ?? "Address Not Found"}
                                             </p>
                                         </div>
-
-                                        <div className="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
                                     </div>
 
                                     <Link
