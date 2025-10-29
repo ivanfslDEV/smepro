@@ -74,24 +74,25 @@ The project follows a clean and modular architecture, with clear separation of c
 
 ```
 src/
-  ├── app/                    # Next.js App Router
-  │   ├── (panel)/           # Protected Routes (Auth Required)
-  │   │   ├── dashboard/     # Business Dashboard
-  │   │   │   ├── _actions/  # Server Actions
-  │   │   │   ├── _components/ # Route-specific Components
-  │   │   │   ├── _data-access/ # Data Fetching Logic
-  │   │   │   └── page.tsx   # Dashboard View
-  │   │   ├── plans/         # Subscription Plans
-  │   │   ├── profile/       # User Profile Management
-  │   │   └── services/      # Service Management
-  │   ├── (public)/          # Public Routes
-  │   │   ├── _components/   # Public Components
-  │   │   ├── business/      # Business Public Profile
-  │   │   └── page.tsx       # Landing Page
-  │   └── api/               # API Routes
-  │       ├── auth/          # Authentication Endpoints
-  │       ├── business/      # Business Management
-  │       └── schedule/      # Scheduling Endpoints
+   ├── app/                    # Next.js App Router
+   │   ├── (panel)/           # Protected Routes (Auth Required)
+   │   │   ├── dashboard/     # Business Dashboard
+   │   │   │   ├── _actions/  # Server Actions
+   │   │   │   ├── _components/ # Route-specific Components
+   │   │   │   ├── _data-access/ # Data Fetching Logic
+   │   │   │   └── page.tsx   # Dashboard View
+   │   │   ├── plans/         # Subscription Plans
+   │   │   ├── profile/       # User Profile Management
+   │   │   └── services/      # Service Management
+   │   ├── (public)/          # Public Routes
+   │   │   ├── _components/   # Public Components
+   │   │   ├── business/      # Business Public Profile
+   │   │   └── page.tsx       # Landing Page
+   │   ├── not-found.tsx      # Custom 404 Not Found Page
+   │   └── api/               # API Routes
+   │       ├── auth/          # Authentication Endpoints
+   │       ├── business/      # Business Management
+   │       └── schedule/      # Scheduling Endpoints
   │
   ├── components/            # Shared Components
   │   ├── ui/               # UI Components (shadcn/ui)
