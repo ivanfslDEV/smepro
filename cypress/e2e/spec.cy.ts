@@ -1,6 +1,6 @@
 describe("Home Page", () => {
   it("should load successfully", () => {
     cy.visit("/");
-    cy.contains("Welcome").should("be.visible");
+    cy.contains("Find Professionals").should("be.visible");
   });
 });

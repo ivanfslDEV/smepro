@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import { handleRegister } from "../_actions/login";
 import { Loader } from "@/components/ui/loader";
+import { redirect } from "next/navigation";
 
 export function Header() {
   const { data: session, status } = useSession();
@@ -25,7 +26,7 @@ export function Header() {
 
   async function handleLogin() {
     setLoading(true);
-    await handleRegister("google");
+    redirect("/sign-in");
   }
 
   const NavLinks = () => (
