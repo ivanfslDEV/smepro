@@ -1,22 +1,24 @@
 import { redirect } from "next/navigation";
 import { getInfoSchedule } from "./_data-access/get-info-schedule";
 import { ScheduleContent } from "./_components/schedule-content";
+import { Toaster } from 'sonner';
 
 export default async function SchedulePage({
-  params,
+    params
 }: {
-  params: Promise<{ id: string }>;
+    params: Promise<{id: string}>
 }) {
-  const userId = (await params).id;
-  const user = await getInfoSchedule({ userId: userId });
+    const userId = (await params).id;
+    const user = await getInfoSchedule({userId: userId});
 
-  if (!user) {
-    redirect("/");
-  }
+    if(!user){
+        redirect("/");
+    }
 
-  return (
-    <>
-      <ScheduleContent business={user} />
-    </>
-  );
+    return(
+        <>
+            <Toaster duration={2500} position="top-center" richColors/>
+            <ScheduleContent business={user}/>
+        </>   
+    )
 }

@@ -89,7 +89,6 @@ model User {
   timeZone      String?
   stripe_customer_id String?
   times          String[] @default([])
-  password       String?
 
   subscription Subscription?
   services     Service[]
