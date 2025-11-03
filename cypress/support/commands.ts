@@ -35,3 +35,11 @@
 //     }
 //   }
 // }
+Cypress.Commands.add("login", () => {
+  cy.session("testUser", () => {
+    cy.visit("/api/auth/signin");
+    cy.get('input[name="email"]').type("test@test.com");
+    cy.get('input[name="password"]').type("123456");
+    cy.contains("button", "Sign in with Credentials").click();
+  });
+});
