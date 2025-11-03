@@ -32,6 +32,7 @@ This project is built with the following technologies:
 - Node.js 18+ installed
 - PostgreSQL installed and running
 - Google Account (for OAuth setup)
+- Stripe CLI
 
 ### Installation
 
@@ -64,6 +65,12 @@ npx prisma migrate dev
 
 ```bash
 npm run dev
+```
+
+6. Start the Stripe CLI:
+
+```bash
+npm run stripe:listen
 ```
 
 Visit [http://localhost:3000](http://localhost:3000) to see the result.
