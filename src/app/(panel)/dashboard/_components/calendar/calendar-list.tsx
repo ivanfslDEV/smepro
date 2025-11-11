@@ -97,7 +97,7 @@ export function CalendarList({ times }: CalendarListProps) {
 
     queryClient.invalidateQueries({ queryKey: ["get-calendar"] });
     refetch();
-    toast.success(response.data);
+    toast.success(<div data-cy="toast-success">{response.data}</div>);
     router.refresh();
   }
 
@@ -121,13 +121,22 @@ export function CalendarList({ times }: CalendarListProps) {
                 if (occupant) {
                   return (
                     <div
+                      data-cy={`time-slot-calendar-${slot}`}
                       key={slot}
                       className="flex items-center py-2 border-t last:border-b"
                     >
                       <div className="w-16 text-sm font-semibold">{slot}</div>
                       <div className="flex-1 text-sm">
-                        <div className="font-semibold">{occupant.name}</div>
-                        <div className="text-sm text-gray-500">
+                        <div
+                          data-cy={`time-slot-calendar-name-${slot}`}
+                          className="font-semibold"
+                        >
+                          {occupant.name}
+                        </div>
+                        <div
+                          data-cy={`time-slot-calendar-phone-${slot}`}
+                          className="text-sm text-gray-500"
+                        >
                           {occupant.phone}
                         </div>
                       </div>
@@ -136,6 +145,7 @@ export function CalendarList({ times }: CalendarListProps) {
                         <div className="flex">
                           <DialogTrigger asChild>
                             <Button
+                              data-cy={`time-slot-calendar-details-${slot}`}
                               variant="ghost"
                               size="icon"
                               onClick={() => setDetailAppointment(occupant)}
@@ -145,6 +155,7 @@ export function CalendarList({ times }: CalendarListProps) {
                           </DialogTrigger>
 
                           <Button
+                            data-cy={`time-slot-calendar-cancel-${slot}`}
                             variant="ghost"
                             size="icon"
                             onClick={() => handleCancelAppointment(occupant.id)}
@@ -159,6 +170,7 @@ export function CalendarList({ times }: CalendarListProps) {
 
                 return (
                   <div
+                    data-cy={`time-slot-calendar-${slot}`}
                     key={slot}
                     className="flex items-center py-2 border-t last:border-b"
                   >
