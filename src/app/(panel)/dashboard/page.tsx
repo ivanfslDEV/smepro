@@ -11,20 +11,18 @@ import { LabelSubscription } from "@/components/ui/label-subscription";
 
 export default async function Dashboard() {
   const session = await getSession();
-  if(!session){
-      redirect("/");
+  if (!session) {
+    redirect("/");
   }
 
-  const subscription = await checkSubscription(session?.user?.id)
-  
+  const subscription = await checkSubscription(session?.user?.id);
+
   return (
     <main>
       <div className="space-x-2 flex items-center justify-end">
-        <Link
-          href={`/business/${session.user?.id}`}
-          target="_blank"
-        >
+        <Link href={`/business/${session.user?.id}`} target="_blank">
           <Button
+            data-cy="create-new-appointment-button"
             className="bg-emerald-500 hover:bg-emerald-400 flex-1 md:flex-[0]"
           >
             <CalendarCheck2 className="w-5 h-5" />
@@ -32,7 +30,7 @@ export default async function Dashboard() {
           </Button>
         </Link>
 
-        <ButtonCopyLink userId={session.user?.id}/>
+        <ButtonCopyLink userId={session.user?.id} />
       </div>
 
       {subscription?.subscriptionStatus === "EXPIRED" && (
@@ -41,19 +39,16 @@ export default async function Dashboard() {
 
       {subscription?.subscriptionStatus === "TRIAL" && (
         <div className="bg-green-600 text-white text-sm md:text-base px-3 py-2 rounded-md mt-2">
-          <p className="font-semibold">
-            {subscription?.message}
-          </p>
+          <p className="font-semibold">{subscription?.message}</p>
         </div>
       )}
 
       {subscription?.subscriptionStatus !== "EXPIRED" && (
         <section className="grid grid-cols-1 gap-4 lg:grid-cols-2 mt-4">
-          <Calendar userId={session.user?.id}/>
-          <Reminders userId={session.user?.id}/>
+          <Calendar userId={session.user?.id} />
+          <Reminders userId={session.user?.id} />
         </section>
       )}
-
     </main>
   );
 }
