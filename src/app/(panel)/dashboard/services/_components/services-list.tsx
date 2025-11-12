@@ -56,7 +56,7 @@ export function ServicesList({ services, permission }: ServiceListPros) {
       toast.error(response.error);
       return;
     }
-    toast.success(response.data);
+    toast.success(<div data-cy="toast-success">{response.data}</div>);
   }
 
   function handleEditService(service: Service) {
@@ -119,12 +119,16 @@ export function ServicesList({ services, permission }: ServiceListPros) {
                   <div className="flex items-center space-x-2">
                     <span className="font-light">{service.name}</span>
                     <span className="text-gray-500">-</span>
-                    <span className="text-gray-500">
+                    <span
+                      className="text-gray-500"
+                      data-cy={`service-list-price-${service.name}`}
+                    >
                       {formatCurrency(service.price / 100)}
                     </span>
                   </div>
                   <div className="">
                     <Button
+                      data-cy={`service-edit-${service.name}`}
                       variant="ghost"
                       size="icon"
                       onClick={() => handleEditService(service)}
@@ -132,6 +136,7 @@ export function ServicesList({ services, permission }: ServiceListPros) {
                       <Pencil className="w-4 h-4"></Pencil>
                     </Button>
                     <Button
+                      data-cy={`service-delete-${service.name}`}
                       variant="ghost"
                       size="icon"
                       onClick={() => handleDeleteService(service.id)}
