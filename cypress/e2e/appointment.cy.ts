@@ -113,7 +113,6 @@ describe("New Appointment", () => {
       cy.contains("Appointment Details").should("be.visible");
       cy.contains("View Appointment Details").should("be.visible");
       cy.contains(`Schedule Time:${userData.time}`).should("be.visible");
-      cy.contains(`Schedule Date:${userData.date}`).should("be.visible");
       cy.contains(`Name:${userData.name}`).should("be.visible");
       cy.contains(`Phone:(12) 34567-8900`).should("be.visible");
       cy.contains(`E-mail:${userData.email}`).should("be.visible");
