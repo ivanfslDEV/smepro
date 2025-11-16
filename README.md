@@ -165,6 +165,61 @@ src/
 - Middleware for auth protection
 - Modular component architecture
 
+## 🧪 Testing with Cypress
+
+This project includes end-to-end tests using Cypress.
+
+### Running Cypress Tests
+
+1. **Interactive Mode** (Cypress Test Runner):
+
+```bash
+npm run cypress:open
+```
+
+This opens the Cypress GUI where you can select and run tests interactively.
+
+2. **Headless Mode** (CI/CD):
+
+```bash
+npm run cypress:run
+```
+
+Runs all tests in headless mode, suitable for automated pipelines.
+
+### Test Structure
+
+Tests are located in the `cypress/` directory:
+
+```
+cypress/
+├── e2e/                          # End-to-End Tests
+│   ├── appointment.cy.ts        # Appointment Management Tests
+│   ├── dashboard.cy.ts          # Dashboard Functionality Tests
+│   ├── service.cy.ts            # Service Management Tests
+│   └── spec.cy.ts               # General Specification Tests
+├── fixtures/                     # Test Data
+│   └── example.json
+└── support/                      # Cypress Configuration & Commands
+    ├── commands.ts              # Custom Cypress Commands
+    ├── e2e.ts                   # E2E Configuration
+    └── index.d.ts               # Type Definitions
+```
+
+### Test Coverage
+
+- **Appointment Tests**: Scheduling, modification, and cancellation flows
+- **Dashboard Tests**: User interface and functionality verification
+- **Service Tests**: Service creation and management operations
+- **General Tests**: Overall application behavior and workflows
+
+### Best Practices
+
+- Tests are written in TypeScript for type safety
+- Use data fixtures for consistent test data
+- Custom commands in `support/commands.ts` for reusable test utilities
+- Tests run against a live development server
+
 ## 📝 Environment Variables
 
 ```env
