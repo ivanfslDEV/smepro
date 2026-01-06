@@ -1,0 +1,20 @@
+:root {
+  /* Brand */
+  --color-primary: #10b981; /* emerald-500 */
+  --color-primary-hover: #34d399; /* emerald-400 */
+
+  /* Feedback */
+  --color-success: #16a34a;
+  --color-warning: #f59e0b;
+  --color-error: #dc2626;
+
+  /* Surface */
+  --color-bg: #ffffff;
+  --color-surface: #f9fafb;
+  --color-text: #111827;
+}
+
+[data-theme="dark"] {
+  --color-bg: #121212;
+  --color-text: #ecf0f1;
+}
