@@ -27,7 +27,7 @@ interface ProfessionalsProps {
 
 export function Professionals({ professionals }: ProfessionalsProps) {
   return (
-    <section className="bg-gray-50 py-6" id="professionals">
+    <section className="bg-muted py-6" id="professionals">
       <div className="container mx-auto px-4 pt-10 sm:px-6 lg:px-8">
         <h2 className="text-3xl text-center mb-12 font-bold">
           Business Avalible
@@ -58,7 +58,7 @@ export function Professionals({ professionals }: ProfessionalsProps) {
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-semibold">{business.name}</h3>
-                      <p className="text-sm text-gray-500 line-clamp-2">
+                      <p className="text-sm text-muted-foreground line-clamp-2">
                         {business.address ?? "Address Not Found"}
                       </p>
                     </div>
@@ -67,7 +67,7 @@ export function Professionals({ professionals }: ProfessionalsProps) {
                   <Link
                     href={`/business/${business.id}`}
                     target="_blank"
-                    className="bg-emerald-500 hover:bg-emerald-400 text-white flex items-center justify-center py-2 rounded-md text-sm md:text-base font-medium"
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center justify-center py-2 rounded-md text-sm md:text-base font-medium"
                   >
                     Make an Appointment
                     <ArrowRight className="ml-2" />

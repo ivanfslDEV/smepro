@@ -135,7 +135,7 @@ export function CalendarList({ times }: CalendarListProps) {
                         </div>
                         <div
                           data-cy={`time-slot-calendar-phone-${slot}`}
-                          className="text-sm text-gray-500"
+                          className="text-sm text-muted-foreground"
                         >
                           {occupant.phone}
                         </div>
@@ -175,7 +175,7 @@ export function CalendarList({ times }: CalendarListProps) {
                     className="flex items-center py-2 border-t last:border-b"
                   >
                     <div className="w-16 text-sm font-semibold">{slot}</div>
-                    <div className="flex-1 text-sm text-gray-500">
+                    <div className="flex-1 text-sm text-muted-foreground">
                       Available
                     </div>
                   </div>

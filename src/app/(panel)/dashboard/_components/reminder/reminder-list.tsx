@@ -78,7 +78,7 @@ export function ReminderList({ reminder }: ReminderListProps) {
             {reminder.map((item) => (
               <article
                 key={item.id}
-                className="flex flex-wrap flex-row items-center justify-between py-2 bg-yellow-100 dark:bg-yellow-900/30 mb-2 px-2 rounded-md"
+                className="flex flex-wrap flex-row items-center justify-between py-2 bg-warning/15 mb-2 px-2 rounded-md"
               >
                 <p
                   data-cy="reminder-list-item"
@@ -88,11 +88,11 @@ export function ReminderList({ reminder }: ReminderListProps) {
                 </p>
                 <Button
                   data-cy="remove-button-reminder-item"
-                  className="bg-red-500 hover:bg-red-400 shadow-none rounded-full p-2"
+                  className="bg-destructive hover:bg-destructive/90 shadow-none rounded-full p-2"
                   size="sm"
                   onClick={() => handleDeleteReminder(item.id)}
                 >
-                  <Trash className="w-4 h-4 text-white" />
+                  <Trash className="w-4 h-4 text-destructive-foreground" />
                 </Button>
               </article>
             ))}

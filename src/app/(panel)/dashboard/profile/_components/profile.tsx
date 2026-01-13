@@ -266,7 +266,11 @@ export function ProfileContent({ user }: ProfileContentProps) {
                                                     <Button
                                                         key={hour}
                                                         variant="outline"
-                                                        className={cn("h-10", selectedHours.includes(hour) && "border-2 border-emerald-500 text-primary")}
+                                                        className={cn(
+                                                            "h-10",
+                                                            selectedHours.includes(hour) &&
+                                                                "border-2 border-primary text-primary"
+                                                        )}
                                                         onClick={ () => toggleHour(hour)}
                                                     >
                                                         {hour}
@@ -315,7 +319,7 @@ export function ProfileContent({ user }: ProfileContentProps) {
 
                             <Button
                                 type="submit"
-                                className="w-full bg-emerald-500 hover:bg-emerald-400"
+                                className="w-full bg-primary hover:bg-primary/90"
                             >
                                 Save
                             </Button>

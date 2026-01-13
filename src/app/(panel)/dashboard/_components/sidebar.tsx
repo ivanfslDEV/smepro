@@ -157,7 +157,7 @@ export function SidebarDashboard({ children }: { children: React.ReactNode }) {
                 <Button
                   variant="outline"
                   size="icon"
-                  className="bg-emerald-500 text-white hover:bg-emerald-400 md:hidden"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 md:hidden"
                   onClick={() => setIsCollapsed(false)}
                 >
                   <List className="w-5 h-5" />
@@ -236,7 +236,7 @@ function SidebarLink({
         className={clsx(
           "flex items-center gap-2 px-3 py-2 rounded-md transition-colors",
           {
-            "bg-emerald-500 text-white": pathname === href,
+            "bg-primary text-primary-foreground": pathname === href,
             "text-muted-foreground hover:bg-muted": pathname !== href,
           }
         )}

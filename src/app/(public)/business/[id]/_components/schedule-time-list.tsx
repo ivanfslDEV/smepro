@@ -53,7 +53,7 @@ export function ScheduleTimeList({
             className={cn(
               "h-10 select-none",
               selectedTime === slot.time &&
-                "border-2 border-emerald-500 text-primary",
+                "border-2 border-primary text-primary",
               !slotEnabled && "opacity-50 cursor-not-allowed"
             )}
             disabled={!slotEnabled}

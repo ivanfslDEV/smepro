@@ -80,7 +80,7 @@ export function ServicesList({ services, permission }: ServiceListPros) {
               </DialogTrigger>
             )}
             {!permission.hasPermission && (
-              <Link href="/dashboard/plans" className="text-red-500">
+              <Link href="/dashboard/plans" className="text-destructive">
                 Service limit reached
               </Link>
             )}
@@ -118,9 +118,9 @@ export function ServicesList({ services, permission }: ServiceListPros) {
                 >
                   <div className="flex items-center space-x-2">
                     <span className="font-light">{service.name}</span>
-                    <span className="text-gray-500">-</span>
+                    <span className="text-muted-foreground">-</span>
                     <span
-                      className="text-gray-500"
+                      className="text-muted-foreground"
                       data-cy={`service-list-price-${service.name}`}
                     >
                       {formatCurrency(service.price / 100)}

@@ -25,7 +25,7 @@ export function DialogCalendar({appointment }: DialogCalendarPros){
                         <p><span className="font-semibold">Name:</span>{appointment.name}</p>
                         <p><span className="font-semibold">Phone:</span>{appointment.phone}</p>
                         <p><span className="font-semibold">E-mail:</span>{appointment.email}</p>
-                        <section className="bg-gray-100 mt-4 p-2 rounded-md">
+                        <section className="bg-muted mt-4 p-2 rounded-md">
                             <p><span className="font-semibold">Service:</span>{appointment.service.name}</p>
                         </section>
                     </article>

@@ -129,11 +129,11 @@ export function ScheduleContent({ business }: ScheduleContentProps) {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="h-32 bg-emerald-500" />
+      <div className="h-32 bg-primary" />
       <section className="container mx-auto px-4 -mt-18">
         <div className="max-w-2xl mx-auto">
           <article className="flex flex-col items-center">
-            <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-white mb-8">
+            <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-background mb-8">
               <Image
                 src={business.image ? business.image : imgTest}
                 alt="Business Photo"
@@ -157,7 +157,7 @@ export function ScheduleContent({ business }: ScheduleContentProps) {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleRegisterAppointment)}
-            className="mx-2 space-y-6 bg-white p-6 border rounded-md shadow-sm"
+            className="mx-2 space-y-6 bg-card text-card-foreground p-6 border border-border rounded-md shadow-sm"
           >
             <FormField
               control={form.control}
@@ -229,7 +229,7 @@ export function ScheduleContent({ business }: ScheduleContentProps) {
                   <FormControl>
                     <DateTimePicker
                       initialDate={new Date()}
-                      className="w-full rounded border p-2"
+                      className="w-full rounded border border-input p-2"
                       onChange={(date) => {
                         if (date) {
                           field.onChange(date);
@@ -277,7 +277,7 @@ export function ScheduleContent({ business }: ScheduleContentProps) {
                 <Label className="font-semibold">Available Times:</Label>
                 <div
                   data-cy="available-times-appointment-form"
-                  className="bg-gray-100 p-4 rounded-lg"
+                  className="bg-muted p-4 rounded-lg"
                 >
                   {loadingSlots ? (
                     <p> Loading...</p>
@@ -312,7 +312,7 @@ export function ScheduleContent({ business }: ScheduleContentProps) {
               <Button
                 data-cy="save-button-appointment-form"
                 type="submit"
-                className="w-full bg-emerald-500 hover:bg-emerald-400"
+                className="w-full bg-primary hover:bg-primary/90"
                 disabled={
                   !watch("name") ||
                   !watch("email") ||
@@ -323,7 +323,7 @@ export function ScheduleContent({ business }: ScheduleContentProps) {
                 Schedule Appointment
               </Button>
             ) : (
-              <p className="bg-red-500 text-white text-center px-4 py-2 rounded-md">
+              <p className="bg-destructive text-destructive-foreground text-center px-4 py-2 rounded-md">
                 Business is Inactive
               </p>
             )}

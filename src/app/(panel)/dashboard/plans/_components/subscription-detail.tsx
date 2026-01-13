@@ -42,7 +42,7 @@ export function SubscriptionDetail({subscription}: SubscriptionDetailProps){
                         {subscription.plan === "BASIC" ? "BASIC" : "PROFISSIONAL"}
                     </h3>
 
-                    <div className="bg-green-500 text-white w-fit px-4 py-1 rounded-md">
+                    <div className="bg-primary text-primary-foreground w-fit px-4 py-1 rounded-md">
                         {subscription.status === "active" ? "ACTIVE" : "INACTIVE"}
                     </div>
                 </div>

@@ -8,11 +8,11 @@ export function GridPlans(){
             {subscriptionPlans.map((plan, index) => (
                 <Card 
                     key={plan.id} 
-                    className={`flex flex-col w-full  h-full mx-auto ${index === 1 && "border-emerald-500"}`}
+                    className={`flex flex-col w-full  h-full mx-auto ${index === 1 && "border-primary"}`}
                 >
                     {index === 1 && (
-                        <div className="bg-emerald-500 w-full py-3 text-center rounded-t-xl mt-[-25px]">
-                            <p className="font-semibold text-white">EXCLUSIVE DISCOUNT</p>
+                        <div className="bg-primary w-full py-3 text-center rounded-t-xl mt-[-25px]">
+                            <p className="font-semibold text-primary-foreground">EXCLUSIVE DISCOUNT</p>
                         </div>
                     )}
                     <CardHeader>
@@ -34,8 +34,8 @@ export function GridPlans(){
                         </ul>
 
                         <div className="mt-4">
-                            <p className="text-gray-600 line-through">{plan.oldPrice}</p>
-                            <p className="text-black text-2xl font-bold">{plan.price}</p>
+                            <p className="text-muted-foreground line-through">{plan.oldPrice}</p>
+                            <p className="text-foreground text-2xl font-bold">{plan.price}</p>
                         </div>
                     </CardContent>
                     <CardFooter className="mt-auto">

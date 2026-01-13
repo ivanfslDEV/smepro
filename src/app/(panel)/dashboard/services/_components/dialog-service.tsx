@@ -222,7 +222,7 @@ export function DialogService({
           <Button
             data-cy="save-button-new-service-form"
             type="submit"
-            className="w-full font-semibold text-white"
+            className="w-full font-semibold"
             disabled={loading}
           >
             {loading
