@@ -174,7 +174,7 @@ This project includes end-to-end tests using Cypress.
 1. **Interactive Mode** (Cypress Test Runner):
 
 ```bash
-npm run cypress:open
+npx cypress open
 ```
 
 This opens the Cypress GUI where you can select and run tests interactively.
