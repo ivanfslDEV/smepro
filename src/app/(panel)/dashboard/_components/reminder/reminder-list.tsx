@@ -69,18 +69,20 @@ export function ReminderList({ reminder }: ReminderListProps) {
         </CardHeader>
         <CardContent>
           {reminder.length === 0 && (
-            <p className="text-sm text-gray-500">You have 0 reminder(s)</p>
+            <p className="text-sm text-muted-foreground">
+              You have 0 reminder(s)
+            </p>
           )}
 
           <ScrollArea className="h-[340px] lg:max-h-[calc(100vh-15rem)] pr-0 w-full flex-1">
             {reminder.map((item) => (
               <article
                 key={item.id}
-                className="flex flex-wrap flex-row items-center justify-between py-2 bg-yellow-100 mb-2 px-2 rounded-md"
+                className="flex flex-wrap flex-row items-center justify-between py-2 bg-yellow-100 dark:bg-yellow-900/30 mb-2 px-2 rounded-md"
               >
                 <p
                   data-cy="reminder-list-item"
-                  className="text-sm lg:text-base"
+                  className="text-sm lg:text-base text-foreground"
                 >
                   {item.description}
                 </p>

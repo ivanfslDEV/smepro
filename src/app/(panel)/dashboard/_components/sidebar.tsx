@@ -7,14 +7,12 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
-  SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import {
   Collapsible,
   CollapsibleContent,
-  CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Button } from "@/components/ui/button";
 import {
@@ -61,8 +59,9 @@ export function SidebarDashboard({ children }: { children: React.ReactNode }) {
           )}
         </div>
         <Button
-          className="bg-gray-100 hover:bg-gray-50 text-zinc-900 self-end mb-2"
+          className="bg-secondary text-secondary-foreground hover:bg-secondary/80 self-end mb-2"
           onClick={() => setIsCollapsed(!isCollapsed)}
+          aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
           {!isCollapsed ? (
             <ChevronLeft className="w-12 h-12" />
@@ -107,7 +106,7 @@ export function SidebarDashboard({ children }: { children: React.ReactNode }) {
         <Collapsible open={!isCollapsed}>
           <CollapsibleContent>
             <nav className="flex flex-col gap-1 overflow-hidden">
-              <span className="text-sm text-gray-400 font-medium mt-1 uppercase">
+              <span className="text-sm text-muted-foreground font-medium mt-1 uppercase">
                 Panel
               </span>
               <SidebarLink
@@ -124,7 +123,7 @@ export function SidebarDashboard({ children }: { children: React.ReactNode }) {
                 isCollapsed={isCollapsed}
                 icon={<Folder className="w-6 h-6" />}
               />
-              <span className="text-sm text-gray-400 font-medium mt-1 uppercase">
+              <span className="text-sm text-muted-foreground font-medium mt-1 uppercase">
                 Settings
               </span>
               <SidebarLink
@@ -151,62 +150,63 @@ export function SidebarDashboard({ children }: { children: React.ReactNode }) {
           "md:ml-64": !isCollapsed,
         })}
       >
-        <header className="md:hidden flex items-center justify-between border-b px-2 md:px-6 h-14 z-10 sticky top-0 bg-white">
-          <Sheet>
-            <div className="flex items-center gap-4">
+        <header className="md:hidden flex items-center justify-between border-b px-2 md:px-6 h-14 z-10 sticky top-0 bg-background">
+          <div className="flex items-center gap-4">
+            <Sheet>
               <SheetTrigger asChild>
                 <Button
                   variant="outline"
                   size="icon"
-                  className="bg-emerald-500 text-black hover:bg-transparent md:hidden"
+                  className="bg-emerald-500 text-white hover:bg-emerald-400 md:hidden"
                   onClick={() => setIsCollapsed(false)}
                 >
                   <List className="w-5 h-5" />
                 </Button>
               </SheetTrigger>
 
-              <h1 className="text-base md:text-lg font-semibold">
-                Menu SMEPro
-              </h1>
-            </div>
+              <SheetContent
+                side="right"
+                className="sm:max-w-xs bg-background text-foreground"
+              >
+                <div className="px-4 py-3">
+                  <SheetTitle>SMEPro</SheetTitle>
+                  <SheetDescription>Admin Menu</SheetDescription>
+                  <nav className="grid gap-2 text-base pt-5">
+                    <SidebarLink
+                      href="/dashboard"
+                      label="Appointment"
+                      pathname={pathname}
+                      isCollapsed={isCollapsed}
+                      icon={<CalendarCheck2 className="w-6 h-6" />}
+                    />
+                    <SidebarLink
+                      href="/dashboard/services"
+                      label="Services"
+                      pathname={pathname}
+                      isCollapsed={isCollapsed}
+                      icon={<Folder className="w-6 h-6" />}
+                    />
+                    <SidebarLink
+                      href="/dashboard/profile"
+                      label="Profile"
+                      pathname={pathname}
+                      isCollapsed={isCollapsed}
+                      icon={<Settings className="w-6 h-6" />}
+                    />
+                    <SidebarLink
+                      href="/dashboard/plans"
+                      label="Plans"
+                      pathname={pathname}
+                      isCollapsed={isCollapsed}
+                      icon={<Banknote className="w-6 h-6" />}
+                    />
+                  </nav>
+                </div>
+              </SheetContent>
+            </Sheet>
 
-            <SheetContent side="right" className="sm:max-w-xs text-black">
-              <div className="px-4 py-3">
-                <SheetTitle>SMEPro</SheetTitle>
-                <SheetDescription>Admin Menu</SheetDescription>
-                <nav className="grid gap-2 text-base pt-5">
-                  <SidebarLink
-                    href="/dashboard"
-                    label="Appointment"
-                    pathname={pathname}
-                    isCollapsed={isCollapsed}
-                    icon={<CalendarCheck2 className="w-6 h-6" />}
-                  />
-                  <SidebarLink
-                    href="/dashboard/services"
-                    label="Services"
-                    pathname={pathname}
-                    isCollapsed={isCollapsed}
-                    icon={<Folder className="w-6 h-6" />}
-                  />
-                  <SidebarLink
-                    href="/dashboard/profile"
-                    label="Profile"
-                    pathname={pathname}
-                    isCollapsed={isCollapsed}
-                    icon={<Settings className="w-6 h-6" />}
-                  />
-                  <SidebarLink
-                    href="/dashboard/plans"
-                    label="Plans"
-                    pathname={pathname}
-                    isCollapsed={isCollapsed}
-                    icon={<Banknote className="w-6 h-6" />}
-                  />
-                </nav>
-              </div>
-            </SheetContent>
-          </Sheet>
+            <h1 className="text-base md:text-lg font-semibold">Menu SMEPro</h1>
+          </div>
         </header>
 
         <main className="flex-1 py-4 px-2 md:p-6">{children}</main>
@@ -236,8 +236,8 @@ function SidebarLink({
         className={clsx(
           "flex items-center gap-2 px-3 py-2 rounded-md transition-colors",
           {
-            "text-white bg-blue-500": pathname === href,
-            "text-gray-700 hover:bg-gray-100": pathname !== href,
+            "bg-emerald-500 text-white": pathname === href,
+            "text-muted-foreground hover:bg-muted": pathname !== href,
           }
         )}
       >

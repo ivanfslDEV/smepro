@@ -31,7 +31,7 @@ import {
 import Image from "next/image";
 import imgTest from "../../../../../../public/foto1.png"
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Prisma } from "@/generated/prisma"
@@ -41,6 +41,7 @@ import { formatPhone } from "@/utils/formatPhone";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { AvatarProfile } from "./profile-avatar";
+import { useTheme } from "@/components/theme-provider";
 
 type UserWithSubscription = Prisma.UserGetPayload<{
     include: {
@@ -58,6 +59,8 @@ export function ProfileContent({ user }: ProfileContentProps) {
     const [selectedHours, setSelectedHours] = useState<string[]>([]);
     const [dialogIsOpen, setDialogIsOpen] = useState(false);
     const { update } = useSession();
+    const { theme, toggleTheme } = useTheme();
+    const isDark = theme === "dark";
 
     const form = useProfileForm({
         name: user.name,
@@ -125,8 +128,22 @@ export function ProfileContent({ user }: ProfileContentProps) {
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <Card>
-                    <CardHeader>
+                    <CardHeader className="flex flex-row items-center justify-between">
                         <CardTitle>My Profile</CardTitle>
+                        <Button
+                            type="button"
+                            variant="outline"
+                            size="icon"
+                            className="bg-background text-foreground hover:bg-muted"
+                            onClick={toggleTheme}
+                            aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+                        >
+                            {isDark ? (
+                                <Sun className="w-4 h-4" />
+                            ) : (
+                                <Moon className="w-4 h-4" />
+                            )}
+                        </Button>
                     </CardHeader>
                     <CardContent className="space-y-6">
                         <div className="flex justify-center">
