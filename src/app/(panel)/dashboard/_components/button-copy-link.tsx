@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "@/components/ui/button";
+import { IconButton } from "@/components/ui/icon-button";
 import { LinkIcon } from "lucide-react";
 import { toast } from "sonner";
 
@@ -12,8 +12,8 @@ export function ButtonCopyLink({ userId }: {userId: string}){
     }
 
     return(
-        <Button onClick={handleCopyLink}>
+        <IconButton label="Copy scheduling link" onClick={handleCopyLink}>
             <LinkIcon className="w-5 h-5"/>
-        </Button>
+        </IconButton>
     )
 }

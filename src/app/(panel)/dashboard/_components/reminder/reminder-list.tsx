@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Reminder } from "@/generated/prisma";
@@ -18,6 +17,7 @@ import {
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { ReminderContent } from "./reminder-content";
 import { useState } from "react";
+import { IconButton } from "@/components/ui/icon-button";
 
 interface ReminderListProps {
   reminder: Reminder[];
@@ -49,13 +49,14 @@ export function ReminderList({ reminder }: ReminderListProps) {
 
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
-              <Button
+              <IconButton
                 data-cy="open-reminder-form"
+                label="Create reminder"
                 variant="ghost"
                 className="w-9 p-0"
               >
                 <Plus className="w-5 h-5" />
-              </Button>
+              </IconButton>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
@@ -86,14 +87,15 @@ export function ReminderList({ reminder }: ReminderListProps) {
                 >
                   {item.description}
                 </p>
-                <Button
+                <IconButton
                   data-cy="remove-button-reminder-item"
+                  label="Remove reminder"
                   className="bg-destructive hover:bg-destructive/90 shadow-none rounded-full p-2"
                   size="sm"
                   onClick={() => handleDeleteReminder(item.id)}
                 >
                   <Trash className="w-4 h-4 text-destructive-foreground" />
-                </Button>
+                </IconButton>
               </article>
             ))}
           </ScrollArea>

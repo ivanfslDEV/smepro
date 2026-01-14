@@ -5,23 +5,16 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { Prisma } from "@/generated/prisma";
-import { includes } from "zod";
-import { Button } from "@/components/ui/button";
-import { Eye, X } from "lucide-react";
 import { cancelAppointment } from "../../_actions/cancel-appointment";
 import { toast } from "sonner";
 import { useState } from "react";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog } from "@/components/ui/dialog";
 import { DialogCalendar } from "./dialog-calendar";
 import { ButtonPickerAppointment } from "./button-date";
-import { Loader } from "@/components/ui/loader";
-
-export type AppointmentWithService = Prisma.AppointmentGetPayload<{
-  include: {
-    service: true;
-  };
-}>;
+import {
+  AppointmentList,
+  AppointmentWithService,
+} from "./appointment-list";
 
 interface CalendarListProps {
   times: string[];
@@ -67,27 +60,6 @@ export function CalendarList({ times }: CalendarListProps) {
     refetchInterval: 30000,
   });
 
-  const hasData = Array.isArray(data) ? data.length > 0 : data != null;
-  const occupantMap: Record<string, AppointmentWithService> = {};
-
-  if (hasData) {
-    for (const appointment of data) {
-      const requiredSlots = Math.ceil(appointment.service.duration / 30);
-
-      const startIndex = times.indexOf(appointment.time);
-
-      if (startIndex !== -1) {
-        for (let i = 0; i < requiredSlots; i++) {
-          const slotIndex = startIndex + i;
-
-          if (slotIndex < times.length) {
-            occupantMap[times[slotIndex]] = appointment;
-          }
-        }
-      }
-    }
-  }
-
   async function handleCancelAppointment(appointmentId: string) {
     const response = await cancelAppointment({ appointmentId: appointmentId });
     if (response.error) {
@@ -113,75 +85,13 @@ export function CalendarList({ times }: CalendarListProps) {
 
         <CardContent>
           <ScrollArea className="h-[calc(100vh-20rem)] lg:h-[calc(100vh-15rem)] pr-4">
-            {isLoading ? (
-              <Loader label="Loading..." size="lg" />
-            ) : (
-              times.map((slot) => {
-                const occupant = occupantMap[slot];
-                if (occupant) {
-                  return (
-                    <div
-                      data-cy={`time-slot-calendar-${slot}`}
-                      key={slot}
-                      className="flex items-center py-2 border-t last:border-b"
-                    >
-                      <div className="w-16 text-sm font-semibold">{slot}</div>
-                      <div className="flex-1 text-sm">
-                        <div
-                          data-cy={`time-slot-calendar-name-${slot}`}
-                          className="font-semibold"
-                        >
-                          {occupant.name}
-                        </div>
-                        <div
-                          data-cy={`time-slot-calendar-phone-${slot}`}
-                          className="text-sm text-muted-foreground"
-                        >
-                          {occupant.phone}
-                        </div>
-                      </div>
-
-                      <div className="ml-auto">
-                        <div className="flex">
-                          <DialogTrigger asChild>
-                            <Button
-                              data-cy={`time-slot-calendar-details-${slot}`}
-                              variant="ghost"
-                              size="icon"
-                              onClick={() => setDetailAppointment(occupant)}
-                            >
-                              <Eye className="w-4 h-4" />
-                            </Button>
-                          </DialogTrigger>
-
-                          <Button
-                            data-cy={`time-slot-calendar-cancel-${slot}`}
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => handleCancelAppointment(occupant.id)}
-                          >
-                            <X className="w-4 h-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                }
-
-                return (
-                  <div
-                    data-cy={`time-slot-calendar-${slot}`}
-                    key={slot}
-                    className="flex items-center py-2 border-t last:border-b"
-                  >
-                    <div className="w-16 text-sm font-semibold">{slot}</div>
-                    <div className="flex-1 text-sm text-muted-foreground">
-                      Available
-                    </div>
-                  </div>
-                );
-              })
-            )}
+            <AppointmentList
+              times={times}
+              appointments={Array.isArray(data) ? data : []}
+              isLoading={isLoading}
+              onViewDetails={(appointment) => setDetailAppointment(appointment)}
+              onCancel={handleCancelAppointment}
+            />
           </ScrollArea>
         </CardContent>
       </Card>

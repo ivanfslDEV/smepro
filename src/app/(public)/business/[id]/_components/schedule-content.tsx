@@ -8,13 +8,11 @@ import { useAppointmentForm, AppointmentFormData } from "./schedule-form";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { formatPhone } from "@/utils/formatPhone";
@@ -30,6 +28,7 @@ import { useCallback, useEffect, useState } from "react";
 import { ScheduleTimeList } from "./schedule-time-list";
 import { createNewAppointment } from "../_actions/create-appointment";
 import { toast } from "sonner";
+import { TextField } from "@/components/ui/text-field";
 
 type UserWithServiceAndSubscription = Prisma.UserGetPayload<{
   include: {
@@ -159,63 +158,42 @@ export function ScheduleContent({ business }: ScheduleContentProps) {
             onSubmit={form.handleSubmit(handleRegisterAppointment)}
             className="mx-2 space-y-6 bg-card text-card-foreground p-6 border border-border rounded-md shadow-sm"
           >
-            <FormField
+            <TextField
               control={form.control}
               name="name"
-              render={({ field }) => (
-                <FormItem className="my-2">
-                  <FormLabel className="font-semibold">Full Name:</FormLabel>
-                  <FormControl>
-                    <Input
-                      id="name"
-                      placeholder="Type your full name..."
-                      data-cy="name-input-appointment-form"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Full Name:"
+              placeholder="Type your full name..."
+              itemClassName="my-2"
+              inputProps={{
+                "data-cy": "name-input-appointment-form",
+                id: "name",
+              }}
             />
-            <FormField
+            <TextField
               control={form.control}
               name="email"
-              render={({ field }) => (
-                <FormItem className="my-2 mt-3">
-                  <FormLabel className="font-semibold">E-mail:</FormLabel>
-                  <FormControl>
-                    <Input
-                      id="email"
-                      placeholder="Type your e-mail..."
-                      data-cy="email-input-appointment-form"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="E-mail:"
+              placeholder="Type your e-mail..."
+              itemClassName="my-2 mt-3"
+              inputProps={{
+                "data-cy": "email-input-appointment-form",
+                id: "email",
+              }}
             />
-            <FormField
+            <TextField
               control={form.control}
               name="phone"
-              render={({ field }) => (
-                <FormItem className="my-2 mt-3">
-                  <FormLabel className="font-semibold">Phone Number:</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      id="phone"
-                      placeholder="(XX) XXXX-XXXX"
-                      data-cy="phone-input-appointment-form"
-                      onChange={(e) => {
-                        const formattedValue = formatPhone(e.target.value);
-                        field.onChange(formattedValue);
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Phone Number:"
+              placeholder="(XX) XXXX-XXXX"
+              itemClassName="my-2 mt-3"
+              inputProps={{
+                "data-cy": "phone-input-appointment-form",
+                id: "phone",
+              }}
+              onChange={(event, field) => {
+                const formattedValue = formatPhone(event.target.value);
+                field.onChange(formattedValue);
+              }}
             />
 
             <FormField
