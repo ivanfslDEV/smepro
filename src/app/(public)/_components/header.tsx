@@ -35,7 +35,7 @@ export function Header() {
           onClick={() => setIsOpen(false)}
           key={item.href}
           asChild
-          className="bg-transparent hover:bg-transparent text-black shadow-none"
+          className="bg-transparent hover:bg-transparent text-foreground shadow-none"
         >
           <Link href={item.href} className="text-base">
             {item.label}
@@ -47,7 +47,7 @@ export function Header() {
       ) : session ? (
         <Link
           href="/dashboard"
-          className="flex items-center justify-center gap-2 bg-zinc-900 text-white py-1 px-4 rounded"
+          className="flex items-center justify-center gap-2 bg-primary text-primary-foreground py-1 px-4 rounded hover:bg-primary/90"
         >
           Access Store
         </Link>
@@ -55,7 +55,7 @@ export function Header() {
         <>
           {loading ? (
             <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-lg animate-fade-in">
-              <div className="rounded-xl bg-white  p-6 shadow-lg">
+              <div className="rounded-xl bg-card text-card-foreground p-6 shadow-lg">
                 <Loader label="Signing in…" size="lg" />
               </div>
             </div>
@@ -71,10 +71,10 @@ export function Header() {
   );
 
   return (
-    <header className="fixed top-0 right-0 left-0 z-[999] py-4 px-6 bg-white">
+    <header className="fixed top-0 right-0 left-0 z-[999] py-4 px-6 bg-background">
       <div className="container mx-auto flex items-center justify-between">
-        <Link href="/" className="text-3xl font-bold text-zinc-900">
-          SME<span className="text-emerald-500">Pro</span>
+        <Link href="/" className="text-3xl font-bold text-foreground">
+          SME<span className="text-primary">Pro</span>
         </Link>
         <nav className="hidden md:flex items-center space-x-4">
           <NavLinks />
@@ -82,7 +82,7 @@ export function Header() {
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild className="md:hidden">
             <Button
-              className="bg-emerald-500 text-black hover:bg-transparent"
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
               size="icon"
             >
               <Menu className="w-6 h-6"></Menu>

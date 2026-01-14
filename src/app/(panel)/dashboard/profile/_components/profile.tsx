@@ -5,13 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
@@ -31,7 +28,7 @@ import {
 import Image from "next/image";
 import imgTest from "../../../../../../public/foto1.png"
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Prisma } from "@/generated/prisma"
@@ -41,6 +38,8 @@ import { formatPhone } from "@/utils/formatPhone";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { AvatarProfile } from "./profile-avatar";
+import { useTheme } from "@/components/theme-provider";
+import { TextField } from "@/components/ui/text-field";
 
 type UserWithSubscription = Prisma.UserGetPayload<{
     include: {
@@ -58,6 +57,8 @@ export function ProfileContent({ user }: ProfileContentProps) {
     const [selectedHours, setSelectedHours] = useState<string[]>([]);
     const [dialogIsOpen, setDialogIsOpen] = useState(false);
     const { update } = useSession();
+    const { theme, toggleTheme } = useTheme();
+    const isDark = theme === "dark";
 
     const form = useProfileForm({
         name: user.name,
@@ -125,8 +126,22 @@ export function ProfileContent({ user }: ProfileContentProps) {
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <Card>
-                    <CardHeader>
+                    <CardHeader className="flex flex-row items-center justify-between">
                         <CardTitle>My Profile</CardTitle>
+                        <Button
+                            type="button"
+                            variant="outline"
+                            size="icon"
+                            className="bg-background text-foreground hover:bg-muted"
+                            onClick={toggleTheme}
+                            aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+                        >
+                            {isDark ? (
+                                <Sun className="w-4 h-4" />
+                            ) : (
+                                <Moon className="w-4 h-4" />
+                            )}
+                        </Button>
                     </CardHeader>
                     <CardContent className="space-y-6">
                         <div className="flex justify-center">
@@ -137,61 +152,27 @@ export function ProfileContent({ user }: ProfileContentProps) {
                         </div>
 
                         <div className="space-y-4">
-                            <FormField 
+                            <TextField
                                 control={form.control}
                                 name="name"
-                                render={({field}) => (
-                                    <FormItem>
-                                        <FormLabel className="font-semibold">
-                                            Name
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input 
-                                                {...field}
-                                                placeholder="Enter company name..."
-                                            />
-                                        </FormControl>
-                                        <FormMessage/>
-                                    </FormItem>
-                                )}
+                                label="Name"
+                                placeholder="Enter company name..."
                             />
-                            <FormField 
+                            <TextField
                                 control={form.control}
                                 name="address"
-                                render={({field}) => (
-                                    <FormItem>
-                                        <FormLabel className="font-semibold">
-                                            Address
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input 
-                                                {...field}
-                                                placeholder="Enter company address..."
-                                            />
-                                        </FormControl>
-                                    </FormItem>
-                                )}
+                                label="Address"
+                                placeholder="Enter company address..."
                             />
-                            <FormField 
+                            <TextField
                                 control={form.control}
                                 name="phone"
-                                render={({field}) => (
-                                    <FormItem>
-                                        <FormLabel className="font-semibold">
-                                            Phone
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input 
-                                                {...field}
-                                                placeholder="Enter company phone..."
-                                                onChange={ (e) => {
-                                                    const formattedValue = formatPhone(e.target.value)
-                                                    field.onChange(formattedValue)
-                                                }}
-                                            />
-                                        </FormControl>
-                                    </FormItem>
-                                )}
+                                label="Phone"
+                                placeholder="Enter company phone..."
+                                onChange={(event, field) => {
+                                    const formattedValue = formatPhone(event.target.value);
+                                    field.onChange(formattedValue);
+                                }}
                             />
 
                             <FormField 
@@ -249,7 +230,11 @@ export function ProfileContent({ user }: ProfileContentProps) {
                                                     <Button
                                                         key={hour}
                                                         variant="outline"
-                                                        className={cn("h-10", selectedHours.includes(hour) && "border-2 border-emerald-500 text-primary")}
+                                                        className={cn(
+                                                            "h-10",
+                                                            selectedHours.includes(hour) &&
+                                                                "border-2 border-primary text-primary"
+                                                        )}
                                                         onClick={ () => toggleHour(hour)}
                                                     >
                                                         {hour}
@@ -298,7 +283,7 @@ export function ProfileContent({ user }: ProfileContentProps) {
 
                             <Button
                                 type="submit"
-                                className="w-full bg-emerald-500 hover:bg-emerald-400"
+                                className="w-full bg-primary hover:bg-primary/90"
                             >
                                 Save
                             </Button>

@@ -83,8 +83,12 @@ export function AvatarProfile({avatarUrl, userId}: AvatarProfileProps){
         <div className="relative w-40 h-40 md:w-48 md:h-48">
 
             <div className="relative flex items-center justify-center w-full h-full">
-                <span className="absolute cursor-pointer z-[2] bg-slate-50/80 p-2 rounded-full shadow-xl">
-                    {loading ? <Loader size={16} color="#131313" className="animate-spin"/> : <Upload size={16} color="#131313"/>}
+                <span className="absolute cursor-pointer z-[2] bg-background/80 text-foreground p-2 rounded-full shadow-xl">
+                    {loading ? (
+                        <Loader size={16} className="animate-spin text-foreground" />
+                    ) : (
+                        <Upload size={16} className="text-foreground" />
+                    )}
                 </span>
                 <input 
                     type="file"
@@ -98,7 +102,7 @@ export function AvatarProfile({avatarUrl, userId}: AvatarProfileProps){
                     src={previewImage}
                     alt="Companys Photo"
                     fill
-                    className="w-full h-48 object-cover rounded-full bg-slate-200"
+                    className="w-full h-48 object-cover rounded-full bg-muted"
                     quality={100}
                     priority
                     sizes="(max-width: 480px) 100vw, (max-width: 1024px) 75vw, 60vw"
@@ -108,7 +112,7 @@ export function AvatarProfile({avatarUrl, userId}: AvatarProfileProps){
                     src={imgTest}
                     alt="Companys Photo"
                     fill
-                    className="w-full h-48 object-cover rounded-full bg-slate-200"
+                    className="w-full h-48 object-cover rounded-full bg-muted"
                     quality={100}
                     priority
                     sizes="(max-width: 480px) 100vw, (max-width: 1024px) 75vw, 60vw"

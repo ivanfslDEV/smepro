@@ -27,7 +27,7 @@ export function Loader({
       aria-live="polite"
       aria-busy="true"
       className={cn(
-        "flex animate-fade-in items-center justify-center text-green-600 dark:text-green-400",
+        "flex animate-fade-in items-center justify-center text-primary",
         vertical ? "flex-col gap-3" : "inline-flex gap-3",
         className
       )}
@@ -36,7 +36,7 @@ export function Loader({
       <svg
         className={cn(
           sizeMap[size],
-          "animate-spin-smooth drop-shadow-[0_0_6px_rgba(34,197,94,0.4)]"
+          "animate-spin-smooth drop-shadow-[0_0_6px_var(--primary-shadow)]"
         )}
         viewBox="0 0 24 24"
         aria-hidden="true"
@@ -58,7 +58,7 @@ export function Loader({
       </svg>
 
       {label && (
-        <span className="text-sm font-medium text-green-700 dark:text-green-300 animate-pulse">
+        <span className="text-sm font-medium text-primary/90 animate-pulse">
           {label}
         </span>
       )}

@@ -9,23 +9,15 @@ import {
   DialogServiceFormData,
   useDialogServiceForm,
 } from "./dialog-service-form";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { convertToCents } from "@/utils/convertCurrency";
 import { createNewService } from "../_actions/create-service";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import { updateService } from "../_actions/update-service";
+import { TextField } from "@/components/ui/text-field";
 
 interface DialogServiceProps {
   closeModal: () => void;
@@ -115,7 +107,10 @@ export function DialogService({
     closeModal();
   }
 
-  function changeCurrency(event: React.ChangeEvent<HTMLInputElement>) {
+  function changeCurrency(
+    event: ChangeEvent<HTMLInputElement>,
+    onValueChange: (value: string) => void
+  ) {
     let { value } = event.target;
     value = value.replace(/\D/g, "");
 
@@ -125,8 +120,7 @@ export function DialogService({
       value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
-    event.target.value = value;
-    form.setValue("price", value);
+    onValueChange(value);
   }
 
   return (
@@ -139,90 +133,60 @@ export function DialogService({
       <Form {...form}>
         <form className="space-y-2" onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col">
-            <FormField
+            <TextField
               control={form.control}
               name="name"
-              render={({ field }) => (
-                <FormItem className="my-2">
-                  <FormLabel className="font-semibold">Service Name</FormLabel>
-                  <FormControl>
-                    <Input
-                      data-cy="name-new-service-form"
-                      placeholder="Service Name"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Service Name"
+              placeholder="Service Name"
+              itemClassName="my-2"
+              inputProps={{ "data-cy": "name-new-service-form" }}
             />
 
-            <FormField
+            <TextField
               control={form.control}
               name="price"
-              render={({ field }) => (
-                <FormItem className="my-2">
-                  <FormLabel className="font-semibold">Service price</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      data-cy="price-new-service-form"
-                      placeholder="120,00"
-                      onChange={changeCurrency}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Service price"
+              placeholder="120,00"
+              itemClassName="my-2"
+              inputProps={{ "data-cy": "price-new-service-form" }}
+              onChange={(event, field) =>
+                changeCurrency(event, field.onChange)
+              }
             />
           </div>
 
           <p className="font-semibold">Service Duration:</p>
           <div className="grid grid-cols-2 gap-3">
-            <FormField
+            <TextField
               control={form.control}
               name="hours"
-              render={({ field }) => (
-                <FormItem className="my-2">
-                  <FormLabel className="font-semibold">Hours:</FormLabel>
-                  <FormControl>
-                    <Input
-                      data-cy="hour-new-service-form"
-                      placeholder="1"
-                      min="0"
-                      type="number"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Hours:"
+              placeholder="1"
+              itemClassName="my-2"
+              inputProps={{
+                "data-cy": "hour-new-service-form",
+                min: "0",
+                type: "number",
+              }}
             />
-            <FormField
+            <TextField
               control={form.control}
               name="minutes"
-              render={({ field }) => (
-                <FormItem className="my-2">
-                  <FormLabel className="font-semibold">Minutes:</FormLabel>
-                  <FormControl>
-                    <Input
-                      data-cy="minute-new-service-form"
-                      placeholder="1"
-                      min="0"
-                      type="number"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Minutes:"
+              placeholder="1"
+              itemClassName="my-2"
+              inputProps={{
+                "data-cy": "minute-new-service-form",
+                min: "0",
+                type: "number",
+              }}
             />
           </div>
 
           <Button
             data-cy="save-button-new-service-form"
             type="submit"
-            className="w-full font-semibold text-white"
+            className="w-full font-semibold"
             disabled={loading}
           >
             {loading

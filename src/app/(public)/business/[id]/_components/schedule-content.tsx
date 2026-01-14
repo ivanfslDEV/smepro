@@ -8,13 +8,11 @@ import { useAppointmentForm, AppointmentFormData } from "./schedule-form";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { formatPhone } from "@/utils/formatPhone";
@@ -30,6 +28,7 @@ import { useCallback, useEffect, useState } from "react";
 import { ScheduleTimeList } from "./schedule-time-list";
 import { createNewAppointment } from "../_actions/create-appointment";
 import { toast } from "sonner";
+import { TextField } from "@/components/ui/text-field";
 
 type UserWithServiceAndSubscription = Prisma.UserGetPayload<{
   include: {
@@ -129,11 +128,11 @@ export function ScheduleContent({ business }: ScheduleContentProps) {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="h-32 bg-emerald-500" />
+      <div className="h-32 bg-primary" />
       <section className="container mx-auto px-4 -mt-18">
         <div className="max-w-2xl mx-auto">
           <article className="flex flex-col items-center">
-            <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-white mb-8">
+            <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-background mb-8">
               <Image
                 src={business.image ? business.image : imgTest}
                 alt="Business Photo"
@@ -157,65 +156,44 @@ export function ScheduleContent({ business }: ScheduleContentProps) {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleRegisterAppointment)}
-            className="mx-2 space-y-6 bg-white p-6 border rounded-md shadow-sm"
+            className="mx-2 space-y-6 bg-card text-card-foreground p-6 border border-border rounded-md shadow-sm"
           >
-            <FormField
+            <TextField
               control={form.control}
               name="name"
-              render={({ field }) => (
-                <FormItem className="my-2">
-                  <FormLabel className="font-semibold">Full Name:</FormLabel>
-                  <FormControl>
-                    <Input
-                      id="name"
-                      placeholder="Type your full name..."
-                      data-cy="name-input-appointment-form"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Full Name:"
+              placeholder="Type your full name..."
+              itemClassName="my-2"
+              inputProps={{
+                "data-cy": "name-input-appointment-form",
+                id: "name",
+              }}
             />
-            <FormField
+            <TextField
               control={form.control}
               name="email"
-              render={({ field }) => (
-                <FormItem className="my-2 mt-3">
-                  <FormLabel className="font-semibold">E-mail:</FormLabel>
-                  <FormControl>
-                    <Input
-                      id="email"
-                      placeholder="Type your e-mail..."
-                      data-cy="email-input-appointment-form"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="E-mail:"
+              placeholder="Type your e-mail..."
+              itemClassName="my-2 mt-3"
+              inputProps={{
+                "data-cy": "email-input-appointment-form",
+                id: "email",
+              }}
             />
-            <FormField
+            <TextField
               control={form.control}
               name="phone"
-              render={({ field }) => (
-                <FormItem className="my-2 mt-3">
-                  <FormLabel className="font-semibold">Phone Number:</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      id="phone"
-                      placeholder="(XX) XXXX-XXXX"
-                      data-cy="phone-input-appointment-form"
-                      onChange={(e) => {
-                        const formattedValue = formatPhone(e.target.value);
-                        field.onChange(formattedValue);
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Phone Number:"
+              placeholder="(XX) XXXX-XXXX"
+              itemClassName="my-2 mt-3"
+              inputProps={{
+                "data-cy": "phone-input-appointment-form",
+                id: "phone",
+              }}
+              onChange={(event, field) => {
+                const formattedValue = formatPhone(event.target.value);
+                field.onChange(formattedValue);
+              }}
             />
 
             <FormField
@@ -229,7 +207,7 @@ export function ScheduleContent({ business }: ScheduleContentProps) {
                   <FormControl>
                     <DateTimePicker
                       initialDate={new Date()}
-                      className="w-full rounded border p-2"
+                      className="w-full rounded border border-input p-2"
                       onChange={(date) => {
                         if (date) {
                           field.onChange(date);
@@ -277,7 +255,7 @@ export function ScheduleContent({ business }: ScheduleContentProps) {
                 <Label className="font-semibold">Available Times:</Label>
                 <div
                   data-cy="available-times-appointment-form"
-                  className="bg-gray-100 p-4 rounded-lg"
+                  className="bg-muted p-4 rounded-lg"
                 >
                   {loadingSlots ? (
                     <p> Loading...</p>
@@ -312,7 +290,7 @@ export function ScheduleContent({ business }: ScheduleContentProps) {
               <Button
                 data-cy="save-button-appointment-form"
                 type="submit"
-                className="w-full bg-emerald-500 hover:bg-emerald-400"
+                className="w-full bg-primary hover:bg-primary/90"
                 disabled={
                   !watch("name") ||
                   !watch("email") ||
@@ -323,7 +301,7 @@ export function ScheduleContent({ business }: ScheduleContentProps) {
                 Schedule Appointment
               </Button>
             ) : (
-              <p className="bg-red-500 text-white text-center px-4 py-2 rounded-md">
+              <p className="bg-destructive text-destructive-foreground text-center px-4 py-2 rounded-md">
                 Business is Inactive
               </p>
             )}

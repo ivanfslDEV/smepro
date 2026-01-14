@@ -3,24 +3,12 @@
 import { useState } from "react";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Pencil, Plus, X } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { IconButton } from "@/components/ui/icon-button";
+import { Plus } from "lucide-react";
 import { DialogService } from "./dialog-service";
 import { Service } from "@/generated/prisma/client";
 import { formatCurrency } from "@/utils/formatCurrency";
@@ -28,6 +16,7 @@ import { deleteService } from "../_actions/delete-service";
 import { toast } from "sonner";
 import { ResultPermissionProp } from "@/utils/permissions/canPermission";
 import Link from "next/link";
+import { ServiceCard } from "./service-card";
 
 interface ServiceListPros {
   services: Service[];
@@ -74,13 +63,16 @@ export function ServicesList({ services, permission }: ServiceListPros) {
             </CardTitle>
             {permission.hasPermission && (
               <DialogTrigger asChild>
-                <Button data-cy="open-create-service-form">
+                <IconButton
+                  data-cy="open-create-service-form"
+                  label="Create service"
+                >
                   <Plus className="w-4 h-4" />
-                </Button>
+                </IconButton>
               </DialogTrigger>
             )}
             {!permission.hasPermission && (
-              <Link href="/dashboard/plans" className="text-red-500">
+              <Link href="/dashboard/plans" className="text-destructive">
                 Service limit reached
               </Link>
             )}
@@ -112,39 +104,13 @@ export function ServicesList({ services, permission }: ServiceListPros) {
           <CardContent>
             <section className="space-y-4 mt-5">
               {servicesList.map((service) => (
-                <article
+                <ServiceCard
                   key={service.id}
-                  className="flex items-center justify-between"
-                >
-                  <div className="flex items-center space-x-2">
-                    <span className="font-light">{service.name}</span>
-                    <span className="text-gray-500">-</span>
-                    <span
-                      className="text-gray-500"
-                      data-cy={`service-list-price-${service.name}`}
-                    >
-                      {formatCurrency(service.price / 100)}
-                    </span>
-                  </div>
-                  <div className="">
-                    <Button
-                      data-cy={`service-edit-${service.name}`}
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => handleEditService(service)}
-                    >
-                      <Pencil className="w-4 h-4"></Pencil>
-                    </Button>
-                    <Button
-                      data-cy={`service-delete-${service.name}`}
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => handleDeleteService(service.id)}
-                    >
-                      <X className="w-4 h-4"></X>
-                    </Button>
-                  </div>
-                </article>
+                  service={service}
+                  priceLabel={formatCurrency(service.price / 100)}
+                  onEdit={handleEditService}
+                  onDelete={handleDeleteService}
+                />
               ))}
             </section>
           </CardContent>
