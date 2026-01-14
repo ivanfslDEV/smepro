@@ -1,5 +1,5 @@
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { AppointmentWithService } from "./calendar-list";
+import { AppointmentWithService } from "./appointment-list";
 import { format } from "date-fns";
 
 interface DialogCalendarPros{

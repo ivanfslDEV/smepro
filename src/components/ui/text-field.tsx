@@ -17,10 +17,15 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
+type DataAttributes = {
+  [key: `data-${string}`]: string | number | boolean | undefined;
+};
+
 type InputProps = Omit<
   ComponentProps<typeof Input>,
   "value" | "defaultValue" | "onChange" | "onBlur"
->;
+> &
+  DataAttributes;
 
 interface TextFieldProps<TFieldValues extends FieldValues> {
   control: Control<TFieldValues>;
