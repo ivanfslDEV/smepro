@@ -8,6 +8,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { usePathname } from "next/navigation";
 
 type Theme = "light" | "dark";
 
@@ -30,6 +31,8 @@ function applyTheme(theme: Theme) {
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>("light");
   const [initialized, setInitialized] = useState(false);
+  const pathname = usePathname() ?? "";
+  const isDashboardRoute = pathname.startsWith("/dashboard");
 
   useEffect(() => {
     const saved = window.localStorage.getItem(THEME_STORAGE_KEY);
@@ -39,16 +42,16 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const initial = saved === "light" || saved === "dark" ? saved : system;
     setTheme(initial);
     setInitialized(true);
-    applyTheme(initial);
   }, []);
 
   useEffect(() => {
     if (!initialized) {
       return;
     }
-    applyTheme(theme);
+    const appliedTheme: Theme = isDashboardRoute ? theme : "light";
+    applyTheme(appliedTheme);
     window.localStorage.setItem(THEME_STORAGE_KEY, theme);
-  }, [theme, initialized]);
+  }, [theme, initialized, isDashboardRoute]);
 
   const toggleTheme = useCallback(() => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
