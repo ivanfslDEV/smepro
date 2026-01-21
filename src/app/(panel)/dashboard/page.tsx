@@ -8,6 +8,7 @@ import { Calendar } from "./_components/calendar/calendar";
 import { CalendarCheck2 } from "lucide-react";
 import { checkSubscription } from "@/utils/permissions/checkSubscription";
 import { LabelSubscription } from "@/components/ui/label-subscription";
+import CalendarApp from "./_components/calendar/schedule";
 
 export default async function Dashboard() {
   const session = await getSession();
@@ -44,9 +45,8 @@ export default async function Dashboard() {
       )}
 
       {subscription?.subscriptionStatus !== "EXPIRED" && (
-        <section className="grid grid-cols-1 gap-4 lg:grid-cols-2 mt-4">
-          <Calendar userId={session.user?.id} />
-          <Reminders userId={session.user?.id} />
+        <section className="grid grid-cols-1">
+          <CalendarApp />
         </section>
       )}
     </main>
